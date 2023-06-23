@@ -1,11 +1,7 @@
 <template>
-  <div>
-    <div
-      class="leading-normal tracking-normal text-green gradient bg-red-700"
-      style="font-family: 'DM Sans', sans-serif"
-    >
-      <Header />
-    </div>
+  <div class="leading-normal tracking-normal">
+    <Header />
+    <h1>This is home page</h1>
   </div>
 </template>
 

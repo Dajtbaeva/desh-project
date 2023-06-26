@@ -40,7 +40,7 @@
         <!-- <button class="btn_in" @click="store.getAvailableRooms()">Now</button> -->
       </div>
     </div>
-    <!-- <div v-for="room of rooms" :key="room.id">{{ room.name }}</div> -->
+    <div v-for="room of rooms" :key="room.id">{{ room.name }}</div>
   </div>
 </template>
 
@@ -51,7 +51,7 @@ import { useStore } from "@/store/store";
 console.log(useStore);
 
 const store = useStore();
-const days = [
+const dayss = [
   { name: "Monday" },
   { name: "Tuesday" },
   { name: "Wednesday" },
@@ -59,15 +59,18 @@ const days = [
   { name: "Friday" },
   { name: "Saturday" },
 ];
-const hour = ref(0);
-const day = ref("");
+// const hour = ref(0);
+// const day = ref("");
 
+const currentDay = new Date();
+const hour = currentDay.getHours();
+const day = currentDay.getDay();
+console.log(hour + ", day: " + day);
 const { data: rooms } = await useFetch(
-  "rooms",
-  () => {
-    store.getAvailableRooms(15, 4);
-    console.log("From async data" + rooms);
-  }
-  //   $fetch(`/available_rooms/?hour=${hour}&day=${day}`)
+  `http://127.0.0.1:8000/api/available_rooms/?hour=${hour}&day=${day}`
+);
+
+const { data: roomz, pending } = await useAsyncData("roomz", () =>
+  $fetch(`http://127.0.0.1:8000/api/available_rooms/?hour=${hour}&day=${3}`)
 );
 </script>

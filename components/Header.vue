@@ -1,15 +1,15 @@
 <template>
-  <nav id="header" class="fixed w-full z-30 top-0 text-white">
+  <header id="header" class="w-full z-30 top-0 text-white">
     <div
       class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-3 px-5"
     >
       <div class="pl-4 flex items-center">
-        <a
+        <NuxtLink
           class="text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
-          href="#"
+          to="/"
         >
           DESH
-        </a>
+        </NuxtLink>
       </div>
       <div
         class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20"
@@ -17,17 +17,17 @@
       >
         <ul class="list-reset lg:flex justify-end flex-1 items-center">
           <li class="mr-3">
-            <a
+            <NuxtLink
               class="inline-block text-black no-underline hover:text-gray-800 hover:underline py-2 px-4"
-              href="#"
-              >Available rooms</a
+              to="/rooms"
+              >Available rooms</NuxtLink
             >
           </li>
           <li class="mr-3">
-            <a
+            <NuxtLink
               class="inline-block text-black no-underline hover:text-gray-800 hover:underline py-2 px-4"
-              href="#"
-              >Settings</a
+              to="/settings"
+              >Settings</NuxtLink
             >
           </li>
         </ul>
@@ -39,6 +39,6 @@
         </button>
       </div>
     </div>
-    <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
-  </nav>
+    <hr class="border-b-2 border-gray-100 opacity-25 my-0 py-0" />
+  </header>
 </template>

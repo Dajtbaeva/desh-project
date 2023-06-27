@@ -12,10 +12,7 @@
           <p>Password <input type="password" [(ngModel)]="pswd" /></p>
           <button class="btn_in" (click)="login()" type="submit">Login</button>
         </div>
-        <div class="content" v-else>
-          <div class="main">
-            <Header />
-          </div>
+        <div class="flex flex-col" v-else>
           <NuxtPage />
         </div>
       </div>

@@ -1,10 +1,9 @@
 <template>
   <div>
-    <!-- <Header/> -->
-    <div class="">
-      <h3>Available rooms</h3>
-      <div class="form">
-        <p>
+    <h2 class="text-center text-xl mt-5 mb-5">Available rooms</h2>
+    <div class="flex text-center justify-evenly">
+      <div>
+        <p class="mb-5">
           Enter time:
           <input
             type="number"
@@ -15,10 +14,11 @@
             min="8"
             max="20"
             step="1"
+            class="w-full rounded-lg shadow-lg"
           />
         </p>
-        <p>
-          Enter day:
+        <p class="mb-5">
+          Choose day:
           <input
             list="days"
             data-list="days"
@@ -26,59 +26,73 @@
             v-model="day"
             id="day"
             name="day"
+            class="w-full rounded-lg shadow-lg"
           />
 
           <datalist id="days">
             <option
-              v-for="day of days"
+              v-for="day of store.days"
               :key="day.name"
-              value="{{ day.name }} "
+              :value="day.name"
             ></option>
           </datalist>
         </p>
-        <!-- <button class="btn_in" @click="onChange()">Search</button> -->
-        <!-- <button class="btn_in" @click="store.getAvailableRooms()">Now</button> -->
+        <div>
+          <button
+            class="w-48 mt-5 text-teal-500 cursor-pointer bg-white rounded-lg shadow-lg border border-spacing-3"
+            @click="getAvailableRooms()"
+          >
+            Search
+          </button>
+        </div>
+        <button
+          class="w-48 mt-5 text-teal-500 cursor-pointer bg-white rounded-lg shadow-lg border border-spacing-3"
+          @click="getCurrentRooms()"
+        >
+          Now
+        </button>
       </div>
-    </div>
-    <div v-for="room of store.rooms" :key="room.id">
-      {{ room.name }} ({{ room.capacity }})
+      <div class="flex flex-col justify-start items-center content-center">
+        <p v-if="store.isLoading" class="text-white text-xl">Loading...</p>
+        <div v-else class="mx-10 w-full">
+          <div
+            v-for="room of store.rooms"
+            :key="room.id"
+            class="flex flex-row items-center content-center mb-10 bg-white rounded-lg px-20 py-3 w-full"
+          >
+            {{ room.name }} ({{ room.capacity }})
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useStore } from "@/store/store";
-
-console.log(useStore);
+import { ref } from "vue";
 
 const store = useStore();
-const dayss = [
-  { name: "Monday" },
-  { name: "Tuesday" },
-  { name: "Wednesday" },
-  { name: "Thursday" },
-  { name: "Friday" },
-  { name: "Saturday" },
-];
-// const hour = ref(0);
-// const day = ref("");
-
 const currentDay = new Date();
-const hour = currentDay.getHours();
-const day = currentDay.getDay();
-console.log(hour + ", day: " + day);
-const { data: rooms } = useFetch(
-  `http://127.0.0.1:8000/api/available_rooms/?hour=${hour}&day=${day}`
-);
+const hour = ref(currentDay.getHours());
+const day = ref(store.days[currentDay.getDay() - 1].name);
 
-const { data: roomz, pending } = await useAsyncData("roomz", () =>
-  $fetch(`http://127.0.0.1:8000/api/available_rooms/?hour=${hour}&day=${3}`)
-);
+// const { data: rooms } = await useFetch(
+//   `http://127.0.0.1:8000/api/available_rooms/?hour=${hour}&day=${day}`
+// );
 
-const getRooms = () => {
+const getCurrentRooms = async () => {
   console.log("onMounted works");
-  store.getCurrentAvailableRooms();
+  await store.getCurrentAvailableRooms();
   console.log(store.rooms);
 };
-onMounted(getRooms);
+const getAvailableRooms = () => {
+  console.log("Change btn is clicked, hour: " + hour.value + ", day: " + day);
+  store.getAvailableRooms(hour.value, day.value);
+};
+onMounted(getCurrentRooms);
+
+useHead({
+  title: "Available rooms",
+});
 </script>

@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
 import { api } from "@/api/index";
-import devalue from "@nuxt/devalue";
+// import devalue from "@nuxt/devalue";
 
 export const useStore = defineStore("store", {
   state: () => ({
+    isLoading: false,
     isLogged: false,
-    api: devalue(api),
+    // api: devalue(api),
     // api: JSON.parse(JSON.stringify(api)),
     days: [
       { name: "Monday" },
@@ -16,8 +17,6 @@ export const useStore = defineStore("store", {
       { name: "Saturday" },
     ],
     rooms: [],
-    // hour: "",
-    // day: "",
   }),
   actions: {
     // login(token, username, password, role, user_id, org_id) {
@@ -48,7 +47,7 @@ export const useStore = defineStore("store", {
           throw new Error("No value");
         }
       } catch (err) {
-        console.log("This error from getAvailableRooms: " + err);
+        console.log("This error from getCurrentAvailableRooms: " + err);
       } finally {
         this.isLoading = false;
       }
@@ -56,12 +55,11 @@ export const useStore = defineStore("store", {
     async getAvailableRooms(hour, day) {
       if (!hour && !day) return;
       this.isLoading = true;
+      const index = this.days.findIndex((item) => item.name === day) + 1;
+      console.log(index);
       try {
-        const currentDay = new Date();
-        this[hour] = currentDay.getHours();
-        this[day] = currentDay.getDay();
-        if (this[hour] > 7 && this[hour] < 21 && this[day] > 0 && this[day] < 7) {
-          this.rooms = await api.getAvailableRooms(this[hour], this[day]);
+        if (hour > 7 && hour < 21 && index > 0 && index < 7) {
+          this.rooms = await api.getAvailableRooms(hour, index);
         } else {
           throw new Error("No value");
         }

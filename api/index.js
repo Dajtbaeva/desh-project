@@ -6,7 +6,7 @@ const POST = "POST";
 export class ApiClass {
   constructor() {
     this.instance = axios.create({
-      baseURL: import.meta.env.NUXT_BASE_URL,
+      baseURL: import.meta.env.VITE_BASE_URL,
     });
   }
   async axiosCall(config) {

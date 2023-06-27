@@ -14,8 +14,9 @@
         </div>
         <div class="content" v-else>
           <div class="main">
-            <NuxtPage />
+            <Header />
           </div>
+          <NuxtPage />
         </div>
       </div>
     </NuxtLayout>

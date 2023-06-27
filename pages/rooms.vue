@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="leading-normal tracking-normal">
-      <Header />
+    <!-- <Header/> -->
+    <div class="">
       <h3>Available rooms</h3>
       <div class="form">
         <p>
@@ -40,12 +40,13 @@
         <!-- <button class="btn_in" @click="store.getAvailableRooms()">Now</button> -->
       </div>
     </div>
-    <div v-for="room of rooms" :key="room.id">{{ room.name }}</div>
+    <div v-for="room of store.rooms" :key="room.id">
+      {{ room.name }} ({{ room.capacity }})
+    </div>
   </div>
 </template>
 
-<script async setup>
-import { ref } from "vue";
+<script setup>
 import { useStore } from "@/store/store";
 
 console.log(useStore);
@@ -66,11 +67,18 @@ const currentDay = new Date();
 const hour = currentDay.getHours();
 const day = currentDay.getDay();
 console.log(hour + ", day: " + day);
-const { data: rooms } = await useFetch(
+const { data: rooms } = useFetch(
   `http://127.0.0.1:8000/api/available_rooms/?hour=${hour}&day=${day}`
 );
 
 const { data: roomz, pending } = await useAsyncData("roomz", () =>
   $fetch(`http://127.0.0.1:8000/api/available_rooms/?hour=${hour}&day=${3}`)
 );
+
+const getRooms = () => {
+  console.log("onMounted works");
+  store.getCurrentAvailableRooms();
+  console.log(store.rooms);
+};
+onMounted(getRooms);
 </script>

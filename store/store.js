@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
-import { api } from "@/api";
+import { api } from "@/api/index";
+import devalue from "@nuxt/devalue";
 
 export const useStore = defineStore("store", {
   state: () => ({
     isLogged: false,
-    api: JSON.parse(JSON.stringify(api)),
+    api: devalue(api),
+    // api: JSON.parse(JSON.stringify(api)),
     days: [
       { name: "Monday" },
       { name: "Tuesday" },
@@ -14,6 +16,8 @@ export const useStore = defineStore("store", {
       { name: "Saturday" },
     ],
     rooms: [],
+    // hour: "",
+    // day: "",
   }),
   actions: {
     // login(token, username, password, role, user_id, org_id) {
@@ -32,15 +36,32 @@ export const useStore = defineStore("store", {
     //   localStorage.removeItem("user_id");
     //   localStorage.removeItem("org_id");
     // },
+    async getCurrentAvailableRooms() {
+      this.isLoading = true;
+      try {
+        const currentDay = new Date();
+        const hour = currentDay.getHours();
+        const day = currentDay.getDay();
+        if (hour > 7 && hour < 21) {
+          this.rooms = await api.getAvailableRooms(hour, day);
+        } else {
+          throw new Error("No value");
+        }
+      } catch (err) {
+        console.log("This error from getAvailableRooms: " + err);
+      } finally {
+        this.isLoading = false;
+      }
+    },
     async getAvailableRooms(hour, day) {
       if (!hour && !day) return;
       this.isLoading = true;
       try {
         const currentDay = new Date();
         this[hour] = currentDay.getHours();
-        this[day] = this.days[currentDay.getDay() - 1].name;
-        if (this[hour] > 7 && this[hour] < 21 && this[day]) {
-          this.rooms = await this.api.getAvailableRooms(this[hour], this[day]);
+        this[day] = currentDay.getDay();
+        if (this[hour] > 7 && this[hour] < 21 && this[day] > 0 && this[day] < 7) {
+          this.rooms = await api.getAvailableRooms(this[hour], this[day]);
         } else {
           throw new Error("No value");
         }

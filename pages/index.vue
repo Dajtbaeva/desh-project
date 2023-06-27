@@ -1,7 +1,7 @@
 <template>
   <div class="leading-normal tracking-normal">
-    <Header />
-    <h1>This is home page</h1>
+    <!-- <Header /> -->
+    <h1>This is home dsdspage</h1>
   </div>
 </template>
 

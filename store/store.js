@@ -73,10 +73,10 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async getTutors() {
+    async getData(data) {
       this.isLoading = true;
       try {
-        this.tutors = await api.getTutors();
+        this[data] = await api.getData(data);
       } catch (err) {
         console.log("This error from getTutors: " + err);
       } finally {
@@ -95,8 +95,12 @@ export const useStore = defineStore("store", {
       }
     },
     async deleteUser(userId, users) {
-      await api.deleteUser(userId);
       this[users] = this[users].filter((u) => u.id !== userId);
+      await api.deleteUser(userId);
+    },
+    async deleteItem(id, items) {
+      this[items] = this[items].filter((i) => i.id !== id);
+      await api.deleteItem(id, items);
     },
   },
 });

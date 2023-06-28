@@ -21,13 +21,36 @@ export class ApiClass {
       url: `/available_rooms/?hour=${hour}&day=${day}`,
     });
   }
-
-  async getTutors() {
+  async getData(data) {
     return await this.axiosCall({
       method: GET,
-      url: "/tutors",
+      url: `/${data}/`,
     });
   }
+  // async getStudents() {
+  //   return await this.axiosCall({
+  //     method: GET,
+  //     url: "/students",
+  //   });
+  // }
+  // async getGroups() {
+  //   return await this.axiosCall({
+  //     method: GET,
+  //     url: "/groups",
+  //   });
+  // }
+  // async getRooms() {
+  //   return await this.axiosCall({
+  //     method: GET,
+  //     url: "/rooms",
+  //   });
+  // }
+  // async getEvents() {
+  //   return await this.axiosCall({
+  //     method: GET,
+  //     url: "/events",
+  //   });
+  // }
 
   async addNewUser(name, surname, email, role, organization, group) {
     return await this.axiosCall({
@@ -49,24 +72,30 @@ export class ApiClass {
       url: `/user/${userId}`,
     });
   }
-  async deleteGroup(groupId) {
+  async deleteItem(id, item) {
     return await this.axiosCall({
       method: DELETE,
-      url: `/group/${groupId}`,
+      url: `/${item}/${id}`,
     });
   }
-  async deleteRoom(roomId) {
-    return await this.axiosCall({
-      method: DELETE,
-      url: `/room/${roomId}`,
-    });
-  }
-  async deleteEvent(roomId) {
-    return await this.axiosCall({
-      method: DELETE,
-      url: `/room/${roomId}`,
-    });
-  }
+  // async deleteGroup(groupId) {
+  //   return await this.axiosCall({
+  //     method: DELETE,
+  //     url: `/group/${groupId}`,
+  //   });
+  // }
+  // async deleteRoom(roomId) {
+  //   return await this.axiosCall({
+  //     method: DELETE,
+  //     url: `/room/${roomId}`,
+  //   });
+  // }
+  // async deleteEvent(eventId) {
+  //   return await this.axiosCall({
+  //     method: DELETE,
+  //     url: `/event/${eventId}`,
+  //   });
+  // }
 }
 
 export const api = new ApiClass();

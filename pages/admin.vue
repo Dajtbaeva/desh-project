@@ -11,8 +11,6 @@
     </div>
 
     <div class="tabcontent" v-if="activeTab === 1">
-      <!-- <app-user-list [role]="tutor"></app-user-list> -->
-      <!-- <h1>Tutors of your organization</h1> -->
       <h2 v-if="store.isLoading" class="h-full">Loading...</h2>
       <div v-else>
         <div v-for="user of store.tutors">
@@ -68,8 +66,24 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 3">
-      <!-- <app-user-list [role]="student"></app-user-list> -->
-      <h3>user list component, list of students</h3>
+      <h2 v-if="store.isLoading" class="h-full">Loading...</h2>
+      <div v-else>
+        <div v-for="user of store.students">
+          <div class="card">
+            <div class="name">
+              <p>
+                Name: {{ user.name }} {{ user.surname }}, Email:
+                {{ user.email }}
+              </p>
+            </div>
+            <div class="details">
+              <button class="delete" @click="deleteUser(user.id, 'students')">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 4">
       <div class="form">
@@ -120,13 +134,16 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 5">
-      <!-- <app-group-item
-        v-if="group of groups"
-        [group]="group"
-        [students]="getStudentsByGroupId(group.id)"
-      >
-      </app-group-item> -->
-      <h2>component list of groups</h2>
+      <div class="card">
+        <div class="content">
+          <div class="name">
+            <p>{{ group.name | titlecase }}</p>
+          </div>
+          <div class="details">
+            <button class="delete" @click="deleteItem(group.id, 'group')">Delete</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 6">
       <div class="form">
@@ -331,15 +348,19 @@ const setTab = (tabNumber) => {
   activeTab.value = tabNumber;
 };
 
-const getTutors = async () => {
-  console.log("getTutors work");
-  await store.getTutors();
+const getData = async () => {
+  console.log("getData work");
+  await store.getData("tutors");
+  await store.getData("students");
+  await store.getData("room");
+  await store.getData("group");
+  await store.getData("event");
 };
 const deleteUser = async (userId, users) => {
   console.log("Delete user works");
   await store.deleteUser(userId, users);
 };
-onMounted(getTutors);
+onMounted(getData);
 
 useHead({
   title: "Admin page",

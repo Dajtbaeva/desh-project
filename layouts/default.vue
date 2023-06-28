@@ -1,6 +1,5 @@
 <template>
-  <div class="DefaultLayout text-black h-full gradient">
-    <Header />
+  <div class="DefaultLayout text-black h-full w-full gradient">
     <slot />
   </div>
 </template>

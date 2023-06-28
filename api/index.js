@@ -20,6 +20,21 @@ export class ApiClass {
       url: `/available_rooms/?hour=${hour}&day=${day}`,
     });
   }
+
+  async addNewUser(name, surname, email, role, organization, group) {
+    return await this.axiosCall({
+      method: POST,
+      url: `/user/`,
+      data: {
+        name,
+        surname,
+        email,
+        role,
+        organization,
+        group,
+      },
+    });
+  }
 }
 
 export const api = new ApiClass();

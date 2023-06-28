@@ -53,7 +53,7 @@ export const useStore = defineStore("store", {
       }
     },
     async getAvailableRooms(hour, day) {
-      if (!hour && !day) return;
+      if (!hour || !day) return;
       this.isLoading = true;
       const index = this.days.findIndex((item) => item.name === day) + 1;
       console.log(index);
@@ -69,5 +69,15 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
+    addNewUser(name, surname, email, role, organization, group) {
+      if(!name || !surname || !email || !role || !organization || !group) return;
+      try {
+      } catch (err) {
+        console.log("This error from getAvailableRooms: " + err);
+      } finally {
+        this.isLoading = false;
+      }
+      
+    }
   },
 });

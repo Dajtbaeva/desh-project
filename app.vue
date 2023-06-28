@@ -1,54 +1,90 @@
 <template>
   <div>
-    <NuxtLayout>
-      <div>
-        <div
-          class="text-center p-5 mt-24 flex flex-col justify-center items-center content-center rounded"
-          v-if="!isLogged"
+    <div
+      v-if="!store.isLogged"
+      class="flex flex-col m-24 justify-center items-center content-center"
+    >
+      <h1 class="text-center text-teal-500 p-5 font-bold text-2xl">DESH</h1>
+      <div
+        class="text-start p-5 flex flex-col justify-center items-center content-center rounded-lg border-2 border-grey-700 w-1/4"
+      >
+        <h2 class="p-3 text-xl">Login</h2>
+        <p class="w-full">
+          Username <br />
+          <input
+            type="text"
+            v-model="username"
+            class="inline rounded border border-gray-400 w-full mt-3 mb-3 focus:border-teal-600 focus:!outline-none"
+          />
+        </p>
+        <p class="w-full">
+          Password <br />
+          <input
+            type="password"
+            v-model="password"
+            class="inline rounded border border-gray-400 w-full mt-3 focus:border-teal-600 focus:!outline-none"
+          />
+        </p>
+        <button
+          class="w-2/5 mt-4 text-white cursor-pointer bg-teal-500 rounded-xl pt-1 pb-1 transform transition hover:scale-105 duration-300 ease-in-out"
+          @click="login()"
+          type="submit"
         >
-          <h1 class="text-center text-teal-500 pt-5">SHED</h1>
-          <h2 class="p-5">Please login!</h2>
-          <p>Username <input type="text" [(ngModel)]="username" /></p>
-          <p>Password <input type="password" [(ngModel)]="pswd" /></p>
-          <button class="btn_in" (click)="login()" type="submit">Login</button>
-        </div>
-        <div class="flex flex-col" v-else>
-          <NuxtPage />
-        </div>
+          Login
+        </button>
       </div>
-    </NuxtLayout>
+    </div>
+    <div v-else>
+      <NuxtLayout>
+        <Header />
+        <NuxtPage />
+      </NuxtLayout>
+    </div>
   </div>
 </template>
 <script>
+import { useStore } from "@/store/store";
+import { ref } from "vue";
+
 export default {
   setup() {
-    const isLogged = ref(true);
+    const store = useStore();
     const username = ref("");
     const password = ref("");
     const userRole = ref("");
     const orgId = ref("");
 
+    useHead({
+      title: "DESH",
+    });
     const login = () => {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.role);
-      localStorage.setItem("user_id", data.user_id);
-      localStorage.setItem("org_id", data.org_id);
-      this.router.navigate([`/${data.role}`]);
-      this.is_logged = true;
-      this.username = "";
-      this.pswd = "";
+      // localStorage.setItem("token", data.token);
+      // localStorage.setItem("role", data.role);
+      // localStorage.setItem("user_id", data.user_id);
+      // localStorage.setItem("org_id", data.org_id);
+      // this.router.navigate([`/${data.role}`]);
+      // this.is_logged = true;
+      store.isLogged = true;
+      console.log("from login, isLogged is " + store.isLogged);
+      console.log(
+        "Username is " + username.value + ", password is " + password.value
+      );
+      username.value = "";
+      password.value = "";
     };
     const logout = () => {
-      is_logged.value = false;
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.removeItem("user_id");
-      localStorage.removeItem("org_id");
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("role");
+      // localStorage.removeItem("user_id");
+      // localStorage.removeItem("org_id");
+      store.isLogged = false;
     };
     return {
-      isLogged,
+      store,
       login,
       logout,
+      username,
+      password,
     };
   },
 };

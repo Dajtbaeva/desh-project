@@ -34,6 +34,7 @@
         <button
           id="navAction"
           class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+          @click="logout()"
         >
           Logout
         </button>
@@ -42,3 +43,10 @@
     <hr class="border-b-2 border-gray-100 opacity-25 my-0 py-0" />
   </header>
 </template>
+<script setup>
+import { useStore } from "@/store/store";
+const store = useStore();
+const logout = () => {
+  store.isLogged = false;
+};
+</script>

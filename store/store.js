@@ -5,7 +5,7 @@ import { api } from "@/api/index";
 export const useStore = defineStore("store", {
   state: () => ({
     isLoading: false,
-    isLogged: false,
+    isLogged: true,
     // api: devalue(api),
     // api: JSON.parse(JSON.stringify(api)),
     days: [
@@ -69,15 +69,16 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    addNewUser(name, surname, email, role, organization, group) {
-      if(!name || !surname || !email || !role || !organization || !group) return;
+    async addNewUser(name, surname, email, role, organization, group) {
+      if (!name || !surname || !email || !role || !organization || !group)
+        return;
       try {
+        await api.addNewUser(name, surname, email, role, organization, group);
       } catch (err) {
-        console.log("This error from getAvailableRooms: " + err);
+        console.log("This error from addNewUser: " + err);
       } finally {
         this.isLoading = false;
       }
-      
-    }
+    },
   },
 });

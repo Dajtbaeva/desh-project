@@ -17,6 +17,10 @@ export const useStore = defineStore("store", {
       { name: "Saturday" },
     ],
     rooms: [],
+    tutors: [],
+    students: [],
+    groups: [],
+    events: [],
   }),
   actions: {
     // login(token, username, password, role, user_id, org_id) {
@@ -69,6 +73,16 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
+    async getTutors() {
+      this.isLoading = true;
+      try {
+        this.tutors = await api.getTutors();
+      } catch (err) {
+        console.log("This error from getTutors: " + err);
+      } finally {
+        this.isLoading = false;
+      }
+    },
     async addNewUser(name, surname, email, role, organization, group) {
       if (!name || !surname || !email || !role || !organization || !group)
         return;
@@ -79,6 +93,10 @@ export const useStore = defineStore("store", {
       } finally {
         this.isLoading = false;
       }
+    },
+    async deleteUser(userId, users) {
+      await api.deleteUser(userId);
+      this[users] = this[users].filter((u) => u.id !== userId);
     },
   },
 });

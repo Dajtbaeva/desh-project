@@ -1,5 +1,8 @@
 <template>
-  <header id="header" class="w-full z-30 top-0 text-white">
+  <header
+    id="header"
+    class="fixed w-full z-30 top-0 text-white bg-gradient-to-r from-teal-400 to-cyan-500  "
+  >
     <div
       class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-3 px-5"
     >

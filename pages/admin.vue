@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-gradient-to-r from-teal-400 to-cyan-500 h-full">
     <div class="nav">
       <button
         v-for="tab of tabs"
@@ -12,7 +12,25 @@
 
     <div class="tabcontent" v-if="activeTab === 1">
       <!-- <app-user-list [role]="tutor"></app-user-list> -->
-      <h2>user list component, list of all tutors</h2>
+      <!-- <h1>Tutors of your organization</h1> -->
+      <h2 v-if="store.isLoading" class="h-full">Loading...</h2>
+      <div v-else>
+        <div v-for="user of store.tutors">
+          <div class="card">
+            <div class="name">
+              <p>
+                Name: {{ user.name }} {{ user.surname }}, Email:
+                {{ user.email }}
+              </p>
+            </div>
+            <div class="details">
+              <button class="delete" @click="deleteUser(user.id, 'tutors')">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 2">
       <div class="form">
@@ -41,7 +59,12 @@
             required
           />
         </p>
-        <button class="btn_in" @click="addNewUser(tutor)">Add</button>
+        <button
+          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+          @click="addNewUser(tutor)"
+        >
+          Add
+        </button>
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 3">
@@ -88,7 +111,12 @@
           </option>
         </datalist>
 
-        <button class="btn_in" @click="addNewUser(student)">Add</button>
+        <button
+          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+          @click="addNewUser(student)"
+        >
+          Add
+        </button>
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 5">
@@ -113,7 +141,12 @@
             required
           />
         </p>
-        <button class="btn_in" @click="addNewGroup()">Add</button>
+        <button
+          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+          @click="addNewGroup()"
+        >
+          Add
+        </button>
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 7">
@@ -151,7 +184,12 @@
             required
           />
         </p>
-        <button class="btn_in" @click="addNewRoom()">Add</button>
+        <button
+          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+          @click="addNewRoom()"
+        >
+          Add
+        </button>
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 9">
@@ -249,12 +287,19 @@
             {{ room.name }}
           </option>
         </datalist>
-        <button class="btn_in" @click="addNewEvent()">Add</button>
+        <button
+          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+          @click="addNewEvent()"
+        >
+          Add
+        </button>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import { useStore } from "@/store/store";
+
 const tabs = [
   { name: "Tutors", num: 1 },
   { name: "Add new tutor", num: 2 },
@@ -280,10 +325,25 @@ const addDay = ref("");
 const disciplineName = ref("");
 const addTutorId = ref("");
 const addRoomId = ref(0);
+const store = useStore();
 
 const setTab = (tabNumber) => {
   activeTab.value = tabNumber;
 };
+
+const getTutors = async () => {
+  console.log("getTutors work");
+  await store.getTutors();
+};
+const deleteUser = async (userId, users) => {
+  console.log("Delete user works");
+  await store.deleteUser(userId, users);
+};
+onMounted(getTutors);
+
+useHead({
+  title: "Admin page",
+});
 </script>
 <style scoped>
 * {
@@ -294,7 +354,7 @@ const setTab = (tabNumber) => {
   border: 1px solid #ccc;
   overflow: hidden;
   position: fixed;
-  top: 80px;
+  /* top: 80px; */
   left: 0;
   height: 100%;
   width: 200px;
@@ -305,13 +365,16 @@ const setTab = (tabNumber) => {
   display: block;
   background-color: inherit;
   color: black;
-  padding: 22px 16px;
+  padding: 16px;
   width: 100%;
   border: none;
   outline: none;
   text-align: left;
   cursor: pointer;
   transition: 0.3s;
+  border-radius: 4px;
+  /* font-size: 16px; */
+  font-weight: bold;
 }
 .nav button:hover {
   background-color: #ddd;
@@ -320,9 +383,8 @@ const setTab = (tabNumber) => {
   background-color: #ccc;
 }
 .tabcontent {
-  margin: 80px auto;
+  margin: auto;
   margin-left: 250px;
-  width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -354,10 +416,10 @@ const setTab = (tabNumber) => {
   padding: 3px 0;
   margin-top: 15px;
   font: inherit;
-  color: white;
+  color: grey;
   cursor: pointer;
   border: 1px solid #55bcaf;
-  background: #18c0aa;
+  background: white;
   border-radius: 8px;
 }
 .btn_in:hover {
@@ -389,7 +451,8 @@ input:focus {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease-in-out;
-  width: 600px;
+  /* width: 80%; */
+  width: 800px;
 }
 .card:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -404,8 +467,8 @@ input:focus {
   align-items: center;
   justify-content: space-between;
 }
-button {
-  background-color: #4f9d55;
+.delete {
+  background-color: #b93939;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -415,12 +478,9 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
-button:hover {
+/* button:hover {
   background-color: #3a613e;
-}
-.delete {
-  background-color: #b93939;
-}
+} */
 .delete:hover {
   background-color: #5c2121;
 }

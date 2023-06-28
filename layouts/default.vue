@@ -1,5 +1,5 @@
 <template>
-  <div class="DefaultLayout text-black h-full w-full gradient">
+  <div class="bg-gradient-to-r from-teal-400 to-cyan-500 text-black">
     <slot />
   </div>
 </template>

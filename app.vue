@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-gradient-to-r from-teal-400 to-cyan-500 h-full">
     <div
       v-if="!store.isLogged"
       class="flex flex-col m-24 justify-center items-center content-center"
@@ -35,10 +35,12 @@
       </div>
     </div>
     <div v-else>
-      <NuxtLayout>
-        <Header />
+      <!-- <NuxtLayout> -->
+      <!-- </NuxtLayout> -->
+      <Header />
+      <div class="mt-20">
         <NuxtPage />
-      </NuxtLayout>
+      </div>
     </div>
   </div>
 </template>
@@ -89,3 +91,10 @@ export default {
   },
 };
 </script>
+<style>
+.gradient {
+  background-color: linear-gradient(90deg, #20dec5 0%, #98efbf 100%);
+  /* backdrop-filter: blur(30px); */
+  color: black;
+}
+</style>

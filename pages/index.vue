@@ -1,9 +1,19 @@
 <template>
-  <div class="">
-    <h1>This is home dsdspage</h1>
+  <div>
+    <h1>INDEX PAGE</h1>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  setup() {
+    const router = useRouter();
+    onMounted(async () => {
+      const role = localStorage.getItem("role") || null;
+      if (role) {
+        await router.push({ name: role });
+      }
+    });
+  },
+};
 </script>

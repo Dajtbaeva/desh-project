@@ -1,7 +1,7 @@
 <template>
   <header
     id="header"
-    class="fixed w-full z-30 top-0 text-white bg-gradient-to-r from-teal-400 to-cyan-500  "
+    class="fixed w-full z-30 top-0 text-white bg-gradient-to-r from-teal-400 to-cyan-500"
   >
     <div
       class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-3 px-5"
@@ -37,7 +37,7 @@
         <button
           id="navAction"
           class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          @click="logout()"
+          @click="store.logout()"
         >
           Logout
         </button>
@@ -49,7 +49,4 @@
 <script setup>
 import { useStore } from "@/store/store";
 const store = useStore();
-const logout = () => {
-  store.isLogged = false;
-};
 </script>

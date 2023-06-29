@@ -36,22 +36,29 @@ export class ApiClass {
   // async getGroups() {
   //   return await this.axiosCall({
   //     method: GET,
-  //     url: "/groups",
+  //     url: "/group",
   //   });
   // }
   // async getRooms() {
   //   return await this.axiosCall({
   //     method: GET,
-  //     url: "/rooms",
+  //     url: "/room",
   //   });
   // }
   // async getEvents() {
   //   return await this.axiosCall({
   //     method: GET,
-  //     url: "/events",
+  //     url: "/event/",
   //   });
   // }
 
+  async login(username, password) {
+    return await this.axiosCall({
+      method: POST,
+      url: "/login/",
+      data: { username, password },
+    });
+  }
   async addNewUser(name, surname, email, role, organization, group) {
     return await this.axiosCall({
       method: POST,

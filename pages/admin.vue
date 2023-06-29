@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <div class="bg-gradient-to-r from-teal-400 to-cyan-500 h-full">
     <div class="nav">
       <button
@@ -134,13 +135,18 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 5">
-      <div class="card">
-        <div class="content">
+      <div class="rooms" v-for="group of store.groups">
+        <div class="card">
           <div class="name">
-            <p>{{ group.name | titlecase }}</p>
+            <p>{{ group.name }}</p>
           </div>
           <div class="details">
-            <button class="delete" @click="deleteItem(group.id, 'group')">Delete</button>
+            <button
+              class="delete"
+              @click="deleteItem(group.id, 'group', 'groups')"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -167,13 +173,18 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 7">
-      <div class="rooms" v-for="room of rooms">
+      <div class="rooms" v-for="room of store.rooms">
         <div class="card">
           <div class="name">
-            <p>{{ room.name | titlecase }} ({{ room.capacity }})</p>
+            <p>Name: {{ room.name }}, Capacity: {{ room.capacity }}</p>
           </div>
           <div class="details">
-            <button class="delete" @click="deleteRoom(room)">Delete</button>
+            <button
+              class="delete"
+              @click="deleteItem(room.id, 'room', 'rooms')"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -210,17 +221,24 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 9">
-      <div class="events" v-for="event of events">
+      <div class="events" v-for="event of store.events">
         <div class="card">
           <div class="name">
             <p>
-              {{ event.discipline | titlecase }} {{ event.event_start_time }}:00
-              - {{ event.event_start_time + 1 }}:00, {{ days[event.day].name }},
-              {{ event.tutor.name }} {{ event.tutor.surname }}
+              {{ event.discipline }}, {{ event.tutor.name }}
+              {{ event.tutor.surname }}, {{ store.days[event.day].name }}
+              {{ event.event_start_time }}:00 -
+              {{ event.event_start_time + 1 }}:00,
+              {{ event.room.name }}
             </p>
           </div>
           <div class="details">
-            <button class="delete" @click="deleteEvent(event)">Delete</button>
+            <button
+              class="delete"
+              @click="deleteItem(event.id, 'event', 'events')"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -349,18 +367,24 @@ const setTab = (tabNumber) => {
 };
 
 const getData = async () => {
-  console.log("getData work");
-  await store.getData("tutors");
-  await store.getData("students");
-  await store.getData("room");
-  await store.getData("group");
-  await store.getData("event");
+  console.log("getData works");
+  await Promise.allSettled([
+    store.getUsers("tutors"),
+    store.getUsers("students"),
+    store.getData("room", "rooms"),
+    store.getData("group", "groups"),
+    store.getData("event", "events"),
+  ]);
 };
 const deleteUser = async (userId, users) => {
   console.log("Delete user works");
   await store.deleteUser(userId, users);
 };
-onMounted(getData);
+const deleteItem = async (id, path, items) => {
+  console.log("Delete item works");
+  await store.deleteItem(id, path, items);
+};
+onMounted(getData, console.log("onMounted works"));
 
 useHead({
   title: "Admin page",

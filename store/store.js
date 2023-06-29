@@ -1,13 +1,11 @@
 import { defineStore } from "pinia";
 import { api } from "@/api/index";
-// import devalue from "@nuxt/devalue";
+// import { useRouter } from "vue-router";
 
 export const useStore = defineStore("store", {
   state: () => ({
     isLoading: false,
-    isLogged: true,
-    // api: devalue(api),
-    // api: JSON.parse(JSON.stringify(api)),
+    isLogged: false,
     days: [
       { name: "Monday" },
       { name: "Tuesday" },
@@ -23,22 +21,56 @@ export const useStore = defineStore("store", {
     events: [],
   }),
   actions: {
-    // login(token, username, password, role, user_id, org_id) {
-    //   this.isLogged = true;
-    //   localStorage.setItem("token", token);
-    //   localStorage.setItem("role", role);
-    //   localStorage.setItem("user_id", user_id);
-    //   localStorage.setItem("org_id", org_id);
-    //   // post method to authentication using username and password
-    //   this.router.push([`/${role}`]);
-    // },
-    // logout() {
-    //   this.isLogged = false;
-    //   localStorage.removeItem("token");
-    //   localStorage.removeItem("role");
-    //   localStorage.removeItem("user_id");
-    //   localStorage.removeItem("org_id");
-    // },
+    async login(username, password) {
+      const router = useRouter();
+      if (!username || !password) return;
+      try {
+        const response = await api.login(username, password);
+        if (response) {
+          localStorage.setItem("accessToken", response.token);
+          localStorage.setItem("role", response.role);
+          localStorage.setItem("user_id", response.user_id);
+          localStorage.setItem("org_id", response.org_id);
+          const role = localStorage.getItem("role") || null;
+          this.isLogged = true;
+          await router.push({ name: role });
+        }
+      } catch (err) {
+        console.log("Error from store login(): " + err);
+        alert("Invalid username or password!");
+      }
+    },
+    async logout() {
+      const router = useRouter();
+      // console.log(router);
+      this.isLogged = false;
+      localStorage.clear();
+      await router.push({ name: "Auth" });
+    },
+    async validateApp(to) {
+      const router = useRouter();
+      const token = localStorage.getItem("accessToken") || null;
+      if (to && to.meta && "requiresAuth" in to.meta && to.meta.requiresAuth) {
+        if (!token) {
+          localStorage.removeItem("accessToken");
+          await router.push({ name: "Auth" });
+          this.isLogged = false;
+        }
+        if (token) {
+          const role = localStorage.getItem("role") || null;
+          this.isLogged = true;
+          console.log(role);
+        }
+      }
+      if (to.name === "Auth" && token) {
+        const role = localStorage.getItem("role") || null;
+        this.isLogged = true;
+        console.log(role);
+        if (role) {
+          await router.push({ name: role });
+        }
+      }
+    },
     async getCurrentAvailableRooms() {
       this.isLoading = true;
       try {
@@ -59,6 +91,9 @@ export const useStore = defineStore("store", {
     async getAvailableRooms(hour, day) {
       if (!hour || !day) return;
       this.isLoading = true;
+      if (this.rooms && this.rooms.length) {
+        return this.rooms;
+      }
       const index = this.days.findIndex((item) => item.name === day) + 1;
       console.log(index);
       try {
@@ -73,12 +108,38 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async getData(data) {
+    async getUsers(data) {
+      if (!data) return;
+      if (this[data] && this[data].length) {
+        return this[data];
+      }
       this.isLoading = true;
       try {
-        this[data] = await api.getData(data);
+        const response = await api.getData(data);
+        if (response) {
+          this[data] = response;
+          return response;
+        }
       } catch (err) {
-        console.log("This error from getTutors: " + err);
+        console.log("This error from getData from store: " + err);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async getData(path, data) {
+      if (!data || !path) return;
+      if (this[data] && this[data].length) {
+        return this[data];
+      }
+      this.isLoading = true;
+      try {
+        const response = await api.getData(path);
+        if (response) {
+          this[data] = response;
+          return response;
+        }
+      } catch (err) {
+        console.log("This error from getData from store: " + err);
       } finally {
         this.isLoading = false;
       }
@@ -98,9 +159,9 @@ export const useStore = defineStore("store", {
       this[users] = this[users].filter((u) => u.id !== userId);
       await api.deleteUser(userId);
     },
-    async deleteItem(id, items) {
-      this[items] = this[items].filter((i) => i.id !== id);
-      await api.deleteItem(id, items);
+    async deleteItem(itemId, path, items) {
+      this[items] = this[items].filter((i) => i.id !== itemId);
+      await api.deleteItem(itemId, path);
     },
   },
 });

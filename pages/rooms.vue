@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <h2 class="text-center text-xl mt-5 mb-5">Available rooms</h2>
+  <Header />
+  <div class="mt-20 bg-gradient-to-r from-teal-400 to-cyan-500 h-full">
+    <h2 class="text-center text-xl pt-10 mb-5">Available rooms</h2>
     <div class="flex text-center justify-evenly">
       <div>
         <p class="mb-5">

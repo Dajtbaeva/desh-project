@@ -59,7 +59,7 @@ export const useStore = defineStore("store", {
         if (token) {
           const role = localStorage.getItem("role") || null;
           this.isLogged = true;
-          console.log(role);
+          // console.log(role);
         }
       }
       if (to.name === "Auth" && token) {

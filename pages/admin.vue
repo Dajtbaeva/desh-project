@@ -367,7 +367,6 @@ const setTab = (tabNumber) => {
 };
 
 const getData = async () => {
-  console.log("getData works");
   await Promise.allSettled([
     store.getUsers("tutors"),
     store.getUsers("students"),
@@ -384,7 +383,7 @@ const deleteItem = async (id, path, items) => {
   console.log("Delete item works");
   await store.deleteItem(id, path, items);
 };
-onMounted(getData, console.log("onMounted works"));
+onMounted(getData);
 
 useHead({
   title: "Admin page",

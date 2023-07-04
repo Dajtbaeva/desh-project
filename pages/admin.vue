@@ -392,7 +392,6 @@ const addNewUser = async (role) => {
   const role_id = role === "student" ? 2 : 3;
   const org_id = localStorage.getItem("org_id") || null;
   if (org_id && role_id === 3) {
-    // console.log(org_id + " : " + role_id);
     await store.addNewUser(
       addName.value,
       addSurname.value,
@@ -418,6 +417,14 @@ const addNewUser = async (role) => {
     addSurname.value = "";
     addEmail.value = "";
     addGroupId.value = "";
+  }
+};
+const addNewGroup = async () => {
+  const org_id = localStorage.getItem("org_id") || null;
+  if (org_id) {
+    await store.addNewGroup(groupName.value, org_id);
+    // await store.getData("group", "groups");
+    groupName.value = "";
   }
 };
 onMounted(getData);

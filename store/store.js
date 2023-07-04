@@ -146,10 +146,30 @@ export const useStore = defineStore("store", {
     },
     async addNewUser(name, surname, email, role, organization, group) {
       if (!name || !surname || !email || !role || !organization) return;
+      const item = role === 3 ? "tutors" : "students";
+      this.isLoading = true;
       try {
         await api.addNewUser(name, surname, email, role, organization, group);
+        const response = await api.getData(item);
+        if (response) {
+          this[item] = response;
+          return response;
+        }
       } catch (err) {
         console.log("This error from addNewUser: " + err);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async addNewGroup(name, organization) {
+      if (!name || !organization) return;
+      this.isLoading = true;
+      try {
+        await api.addNewGroup(name, organization);
+        const response = await api.getData("group");
+        if (response) this["groups"] = response;
+      } catch (err) {
+        console.log("Error from addNewGroup: " + err);
       } finally {
         this.isLoading = false;
       }

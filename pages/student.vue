@@ -1,8 +1,6 @@
 <template>
   <Header />
-  <div>Student Page</div>
+  <div class="mt-20">
+    <Schedule />
+  </div>
 </template>
-
-<script setup></script>
-
-<style lang="scss" scoped></style>

@@ -21,7 +21,7 @@ export default {
     });
     onMounted(async () => {
       await store.validateApp(route);
-      // console.log("onMounted from app.vue works");
+      // await store.addNewAdmin();
     });
     return {
       store,
@@ -29,3 +29,4 @@ export default {
   },
 };
 </script>
+// admin_s, admin - pswd

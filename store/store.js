@@ -144,6 +144,34 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
+    async getUserById(id) {
+      if (!id) return;
+      try {
+        const response = await api.getUserById(id);
+        if (response) return response;
+      } catch (err) {
+        console.log("Error from getUserById: " + err);
+      }
+    },
+    async getUserEvents(user_id, item) {
+      if (!user_id || !item) return;
+      try {
+        const response = await api.getUserEvents(user_id, item);
+        if (response) return response;
+      } catch (err) {
+        console.log("error from getUserEvents: " + err);
+      }
+    },
+    async addNewAdmin() {
+      await api.addNewUser(
+        "Admin",
+        "Darina",
+        "dajtbaeva@gmail.com",
+        1,
+        1,
+        null
+      );
+    },
     async addNewUser(name, surname, email, role, organization, group) {
       if (!name || !surname || !email || !role || !organization) return;
       const item = role === 3 ? "tutors" : "students";
@@ -222,11 +250,12 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async updateUser() {
+    async updateUser(user) {
       this.isLoading = true;
       try {
-        const response = await api.updateUser(user);
-        if (response) return response;
+        await api.updateUser(user);
+        // const response = await api.updateUser(user);
+        // if (response) return response;
       } catch (err) {
         console.log("Error from updateUser: " + err);
       } finally {

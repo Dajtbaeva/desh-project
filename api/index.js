@@ -35,6 +35,12 @@ export class ApiClass {
       url: `/user/${id}`,
     });
   }
+  async getUserEvents(id, item) {
+    return await this.axiosCall({
+      method: Methods.GET,
+      url: `/${item}/${id}/events`,
+    });
+  }
   async login(username, password) {
     return await this.axiosCall({
       method: Methods.POST,
@@ -103,9 +109,9 @@ export class ApiClass {
       method: Methods.PUT,
       url: `/user/${user.id}`,
       data: user,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
     });
   }
   async deleteUser(userId) {

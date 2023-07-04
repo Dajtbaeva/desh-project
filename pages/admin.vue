@@ -180,7 +180,7 @@
       <div class="rooms" v-for="room of store.rooms">
         <div class="card">
           <div class="name">
-            <p>Name: {{ room.name }}, Capacity: {{ room.capacity }}</p>
+            <p>Name: {{ room.name }}, Places: {{ room.capacity }}</p>
           </div>
           <div class="details">
             <button
@@ -277,7 +277,7 @@
           />
 
           <datalist id="days">
-            <option v-for="day of days" :value="day.name"></option>
+            <option v-for="day of store.days" :value="day.name"></option>
           </datalist>
         </p>
         <p>
@@ -298,7 +298,7 @@
           v-model="addTutorId"
         />
         <datalist id="tutors">
-          <option v-for="tutor of tutors" :value="tutor.id">
+          <option v-for="tutor of store.tutors" :value="tutor.id">
             {{ tutor.name }} {{ tutor.surname }}
           </option>
         </datalist>
@@ -310,7 +310,7 @@
           v-model="addGroupId"
         />
         <datalist id="groups">
-          <option v-for="group of groups" :value="group.id">
+          <option v-for="group of store.groups" :value="group.id">
             {{ group.name }}
           </option>
         </datalist>
@@ -322,7 +322,7 @@
           v-model="addRoomId"
         />
         <datalist id="rooms">
-          <option v-for="room of rooms" :value="room.id">
+          <option v-for="room of store.rooms" :value="room.id">
             {{ room.name }}
           </option>
         </datalist>
@@ -423,8 +423,37 @@ const addNewGroup = async () => {
   const org_id = localStorage.getItem("org_id") || null;
   if (org_id) {
     await store.addNewGroup(groupName.value, org_id);
-    // await store.getData("group", "groups");
     groupName.value = "";
+  }
+};
+const addNewRoom = async () => {
+  const org_id = localStorage.getItem("org_id") || null;
+  if (org_id) {
+    await store.addNewRoom(roomName.value, roomCap.value, org_id);
+    roomName.value = "";
+    roomCap.value = 0;
+  }
+};
+const addNewEvent = async () => {
+  const org_id = localStorage.getItem("org_id") || null;
+  const day =
+    store.days.findIndex((day) => day.name === addDay.value.trim()) + 1;
+  // addNewEvent(event_start_time, room_id, discipline, day, tutor_id, group_id);
+  if (org_id) {
+    await store.addNewEvent(
+      addTime.value,
+      Number(addRoomId.value),
+      disciplineName.value,
+      day,
+      Number(addTutorId.value),
+      Number(addGroupId.value)
+    );
+    addTime.value = 0;
+    addDay.value = "";
+    addTutorId.value = "";
+    disciplineName.value = "";
+    addRoomId.value = "";
+    addGroupId.value = "";
   }
 };
 onMounted(getData);

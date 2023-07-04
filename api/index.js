@@ -58,6 +58,38 @@ export class ApiClass {
       },
     });
   }
+  async addNewRoom(name, capacity, organization) {
+    return await this.axiosCall({
+      method: POST,
+      url: `/room/`,
+      data: {
+        name,
+        capacity,
+        organization,
+      },
+    });
+  }
+  async addNewEvent(
+    event_start_time,
+    room_id,
+    discipline,
+    day,
+    tutor_id,
+    group_id
+  ) {
+    return await this.axiosCall({
+      method: POST,
+      url: `/event/`,
+      data: {
+        event_start_time,
+        room_id,
+        discipline,
+        day,
+        tutor_id,
+        group_id,
+      },
+    });
+  }
   async deleteUser(userId) {
     return await this.axiosCall({
       method: DELETE,

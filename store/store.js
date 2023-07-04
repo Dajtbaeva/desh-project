@@ -174,6 +174,40 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
+    async addNewRoom(name, capacity, organization) {
+      if (!name || !organization) return;
+      this.isLoading = true;
+      try {
+        await api.addNewRoom(name, capacity, organization);
+        const response = await api.getData("room");
+        if (response) this["rooms"] = response;
+      } catch (err) {
+        console.log("Error from addNewRoom: " + err);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async addNewEvent(
+      event_start_time,
+      room_id,
+      discipline,
+      day,
+      tutor_id,
+      group_id
+    ) {
+      if (!event_start_time || !room_id || !discipline || !day || !tutor_id || !group_id)
+        return;
+      this.isLoading = true;
+      try {
+        await api.addNewEvent(event_start_time, room_id, discipline, day, tutor_id, group_id);
+        const response = await api.getData("event");
+        if (response) this["events"] = response;
+      } catch (err) {
+        console.log("Error from addNewEvent: " + err);
+      } finally {
+        this.isLoading = false;
+      }
+    },
     async deleteUser(userId, users) {
       this[users] = this[users].filter((u) => u.id !== userId);
       await api.deleteUser(userId);

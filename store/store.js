@@ -95,7 +95,7 @@ export const useStore = defineStore("store", {
         return this.rooms;
       }
       const index = this.days.findIndex((item) => item.name === day) + 1;
-      console.log(index);
+      // console.log(index);
       try {
         if (hour > 7 && hour < 21 && index > 0 && index < 7) {
           this.rooms = await api.getAvailableRooms(hour, index);
@@ -145,8 +145,7 @@ export const useStore = defineStore("store", {
       }
     },
     async addNewUser(name, surname, email, role, organization, group) {
-      if (!name || !surname || !email || !role || !organization || !group)
-        return;
+      if (!name || !surname || !email || !role || !organization) return;
       try {
         await api.addNewUser(name, surname, email, role, organization, group);
       } catch (err) {

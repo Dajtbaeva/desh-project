@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <div class="bg-gradient-to-r from-teal-400 to-cyan-500 h-full">
+  <div class="mt-20 bg-gradient-to-r from-teal-400 to-cyan-500 h-full">
     <div class="nav">
       <button
         v-for="tab of tabs"
@@ -60,7 +60,7 @@
         </p>
         <button
           class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          @click="addNewUser(tutor)"
+          @click="addNewUser('tutor')"
         >
           Add
         </button>
@@ -118,17 +118,21 @@
           id="group-choice"
           name="group-choice"
           placeholder="Choose a group"
-          v-if="addGroupId"
+          v-model="addGroupId"
         />
         <datalist id="groups">
-          <option v-for="group of groups" :key="group.id">
+          <option
+            v-for="group of store.groups"
+            :key="group.id"
+            :value="group.id"
+          >
             {{ group.name }}
           </option>
         </datalist>
 
         <button
           class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          @click="addNewUser(student)"
+          @click="addNewUser('student')"
         >
           Add
         </button>
@@ -351,7 +355,7 @@ const activeTab = ref(1);
 const addName = ref("");
 const addSurname = ref("");
 const addEmail = ref("");
-const addGroupId = ref(0);
+const addGroupId = ref("");
 const groupName = ref("");
 const roomName = ref("");
 const roomCap = ref(0);
@@ -360,6 +364,7 @@ const addDay = ref("");
 const disciplineName = ref("");
 const addTutorId = ref("");
 const addRoomId = ref(0);
+const addTutorGroup = null;
 const store = useStore();
 
 const setTab = (tabNumber) => {
@@ -382,6 +387,38 @@ const deleteUser = async (userId, users) => {
 const deleteItem = async (id, path, items) => {
   console.log("Delete item works");
   await store.deleteItem(id, path, items);
+};
+const addNewUser = async (role) => {
+  const role_id = role === "student" ? 2 : 3;
+  const org_id = localStorage.getItem("org_id") || null;
+  if (org_id && role_id === 3) {
+    // console.log(org_id + " : " + role_id);
+    await store.addNewUser(
+      addName.value,
+      addSurname.value,
+      addEmail.value,
+      role_id,
+      Number(org_id),
+      addTutorGroup
+    );
+    addName.value = "";
+    addSurname.value = "";
+    addEmail.value = "";
+  }
+  if (org_id && role_id === 2) {
+    await store.addNewUser(
+      addName.value,
+      addSurname.value,
+      addEmail.value,
+      role_id,
+      Number(org_id),
+      Number(addGroupId.value)
+    );
+    addName.value = "";
+    addSurname.value = "";
+    addEmail.value = "";
+    addGroupId.value = "";
+  }
 };
 onMounted(getData);
 

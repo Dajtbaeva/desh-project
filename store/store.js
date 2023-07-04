@@ -195,15 +195,40 @@ export const useStore = defineStore("store", {
       tutor_id,
       group_id
     ) {
-      if (!event_start_time || !room_id || !discipline || !day || !tutor_id || !group_id)
+      if (
+        !event_start_time ||
+        !room_id ||
+        !discipline ||
+        !day ||
+        !tutor_id ||
+        !group_id
+      )
         return;
       this.isLoading = true;
       try {
-        await api.addNewEvent(event_start_time, room_id, discipline, day, tutor_id, group_id);
+        await api.addNewEvent(
+          event_start_time,
+          room_id,
+          discipline,
+          day,
+          tutor_id,
+          group_id
+        );
         const response = await api.getData("event");
         if (response) this["events"] = response;
       } catch (err) {
         console.log("Error from addNewEvent: " + err);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async updateUser() {
+      this.isLoading = true;
+      try {
+        const response = await api.updateUser(user);
+        if (response) return response;
+      } catch (err) {
+        console.log("Error from updateUser: " + err);
       } finally {
         this.isLoading = false;
       }

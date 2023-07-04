@@ -462,7 +462,7 @@ useHead({
   title: "Admin page",
 });
 </script>
-<style scoped>
+<style>
 * {
   box-sizing: border-box;
 }

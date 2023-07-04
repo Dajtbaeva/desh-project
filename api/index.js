@@ -1,8 +1,11 @@
 import axios from "axios";
 
-const GET = "GET";
-const POST = "POST";
-const DELETE = "DELETE";
+const Methods = {
+  GET: "GET",
+  POST: "POST",
+  PUT: "PUT",
+  DELETE: "DELETE",
+};
 
 export class ApiClass {
   constructor() {
@@ -14,29 +17,34 @@ export class ApiClass {
     const response = await this.instance.request(config);
     return response.data;
   }
-
   async getAvailableRooms(hour, day) {
     return await this.axiosCall({
-      method: GET,
+      method: Methods.GET,
       url: `/available_rooms/?hour=${hour}&day=${day}`,
     });
   }
   async getData(data) {
     return await this.axiosCall({
-      method: GET,
+      method: Methods.GET,
       url: `/${data}/`,
+    });
+  }
+  async getUserById(id) {
+    return await this.axiosCall({
+      method: Methods.GET,
+      url: `/user/${id}`,
     });
   }
   async login(username, password) {
     return await this.axiosCall({
-      method: POST,
+      method: Methods.POST,
       url: "/login/",
       data: { username, password },
     });
   }
   async addNewUser(name, surname, email, role, organization, group) {
     return await this.axiosCall({
-      method: POST,
+      method: Methods.POST,
       url: `/user/`,
       data: {
         name,
@@ -50,7 +58,7 @@ export class ApiClass {
   }
   async addNewGroup(name, organization) {
     return await this.axiosCall({
-      method: POST,
+      method: Methods.POST,
       url: `/group/`,
       data: {
         name,
@@ -60,7 +68,7 @@ export class ApiClass {
   }
   async addNewRoom(name, capacity, organization) {
     return await this.axiosCall({
-      method: POST,
+      method: Methods.POST,
       url: `/room/`,
       data: {
         name,
@@ -78,7 +86,7 @@ export class ApiClass {
     group_id
   ) {
     return await this.axiosCall({
-      method: POST,
+      method: Methods.POST,
       url: `/event/`,
       data: {
         event_start_time,
@@ -90,15 +98,25 @@ export class ApiClass {
       },
     });
   }
+  async updateUser(user) {
+    return await this.axiosCall({
+      method: Methods.PUT,
+      url: `/user/${user.id}`,
+      data: user,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
   async deleteUser(userId) {
     return await this.axiosCall({
-      method: DELETE,
+      method: Methods.DELETE,
       url: `/user/${userId}`,
     });
   }
   async deleteItem(id, item) {
     return await this.axiosCall({
-      method: DELETE,
+      method: Methods.DELETE,
       url: `/${item}/${id}`,
     });
   }

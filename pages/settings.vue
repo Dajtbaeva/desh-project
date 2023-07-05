@@ -4,31 +4,31 @@
     <div class="main">
       <div class="form">
         <h3>Settings</h3>
-        <p>
-          Change your username
+        <div>
+          Update username
           <input type="text" v-model="username" id="username" name="username" />
-        </p>
-        <button
-          class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400 mb-8"
-          @click="changeUsername()"
-        >
-          Change
-        </button>
-        <p>
-          Change your password
+          <button
+            class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400 mb-8"
+            @click="changeUsername()"
+          >
+            Change
+          </button>
+        </div>
+        <div>
+          Update password
           <input
             type="password"
             v-model="password"
             id="password"
             name="password"
           />
-        </p>
-        <button
-          class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400"
-          @click="changePassword()"
-        >
-          Change
-        </button>
+          <button
+            class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400"
+            @click="changePassword()"
+          >
+            Change
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -52,6 +52,7 @@ const changeUsername = async () => {
     await store.updateUser(currentUser);
     console.log(currentUser);
     username.value = "";
+    alert("Your username is successfully changed!");
   }
 };
 const changePassword = async () => {
@@ -64,16 +65,33 @@ const changePassword = async () => {
     await store.updateUser(currentUser);
     console.log(currentUser);
     password.value = "";
+    alert("Your password is successfully changed!");
+  }
+};
+const updateUser = async () => {
+  const user_id = localStorage.getItem("user_id") || null;
+  console.log(user_id);
+  if (user_id) {
+    const currentUser = await store.getUserById(+user_id);
+    console.log(currentUser);
+    if (username.value !== "") currentUser.username = username.value;
+    if (password.value !== "") currentUser.password = password.value;
+    if (password.value && username.value) {
+      currentUser.username = username.value;
+      currentUser.password = password.value;
+    }
+    username.value = "";
+    password.value = "";
+    await store.updateUser(currentUser);
+    console.log(currentUser);
+    alert("Your data is successfully changed!");
   }
 };
 useHead({
   title: "Settings",
 });
 </script>
-<style>
-* {
-  box-sizing: border-box;
-}
+<style scoped>
 .main {
   margin: 50px auto;
   margin-left: 250px;
@@ -85,7 +103,7 @@ useHead({
   align-content: center;
 }
 .form {
-  text-align: center;
+  text-align: start;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -100,25 +118,6 @@ useHead({
 }
 .form p {
   width: 70%;
-}
-.form input {
-  width: 100%;
-}
-.btn_in {
-  width: 20%;
-  padding: 3px 0;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  font: inherit;
-  color: white;
-  cursor: pointer;
-  border: 1px solid #55bcaf;
-  background: #18c0aa;
-  border-radius: 8px;
-}
-.btn_in:hover {
-  border-color: #23dfc6;
-  background: #23dfc6;
 }
 input {
   display: inline;

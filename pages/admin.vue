@@ -1,6 +1,9 @@
 <template>
   <Header />
-  <div class="mt-20 bg-gradient-to-r from-teal-400 to-cyan-500 h-full">
+  <div
+    class="mt-20 bg-gradient-to-r from-teal-400 to-cyan-500"
+    style="min-height: 1080px"
+  >
     <div class="nav">
       <button
         v-for="tab of tabs"

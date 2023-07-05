@@ -93,7 +93,7 @@ export default {
         const data = await store.getUserEvents(user_id, role);
         if (data) {
           events.value = data;
-          console.log(events.value);
+          // console.log(events.value);
           buildSchedule();
         } else {
           console.error("Error: data is undefined");
@@ -104,7 +104,7 @@ export default {
     };
 
     onMounted(async () => {
-      // console.log("onmounted works from schedule");
+      // console.log("onMounted works from schedule");
       await getEvents();
     });
     return {

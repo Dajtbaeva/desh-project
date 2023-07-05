@@ -166,14 +166,7 @@ export const useStore = defineStore("store", {
       }
     },
     async addNewAdmin() {
-      await api.addNewUser(
-        "Admin",
-        "Darina",
-        "dajtbaeva@gmail.com",
-        1,
-        1,
-        null
-      );
+      await api.addNewUser("Darina", "Test", "dajtbaeva@gmail.com", 3, 1, null);
     },
     async addNewUser(name, surname, email, role, organization, group) {
       if (!name || !surname || !email || !role || !organization) return;

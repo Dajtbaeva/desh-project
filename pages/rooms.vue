@@ -1,7 +1,9 @@
 <template>
   <Header />
   <div class="mt-20 bg-gradient-to-r from-teal-400 to-cyan-500 h-full">
-    <h2 class="text-center text-xl pt-10 mb-5">Available rooms</h2>
+    <h2 class="text-center text-xl pt-10 mb-5 font-semibold">
+      Available rooms
+    </h2>
     <div class="flex text-center justify-evenly">
       <div>
         <p class="mb-5">
@@ -59,9 +61,9 @@
           <div
             v-for="room of store.rooms"
             :key="room.id"
-            class="flex flex-row items-center content-center mb-10 bg-white rounded-lg px-20 py-3 w-full"
+            class="flex flex-row items-center content-center mb-10 bg-white rounded-lg px-5 py-3 w-full"
           >
-            {{ room.name }} ({{ room.capacity }})
+            {{ room.name }} (places: {{ room.capacity }})
           </div>
         </div>
       </div>

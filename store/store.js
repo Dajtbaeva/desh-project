@@ -155,11 +155,14 @@ export const useStore = defineStore("store", {
     },
     async getUserEvents(user_id, item) {
       if (!user_id || !item) return;
+      this.isLoading = true;
       try {
         const response = await api.getUserEvents(user_id, item);
         if (response) return response;
       } catch (err) {
         console.log("error from getUserEvents: " + err);
+      } finally {
+        this.isLoading = false;
       }
     },
     async addNewAdmin() {

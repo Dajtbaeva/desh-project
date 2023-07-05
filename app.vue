@@ -29,4 +29,7 @@ export default {
   },
 };
 </script>
-// admin_s, admin - pswd
+// admin_s, admin
+// d_test, 123 - tutor
+// studentTileu, admin
+// tutorAlmas, admin

@@ -85,12 +85,12 @@ const day = ref(store.days[currentDay.getDay() - 1].name);
 // );
 
 const getCurrentRooms = async () => {
-  console.log("onMounted works");
+  // console.log("onMounted works");
   await store.getCurrentAvailableRooms();
-  console.log(store.rooms);
+  // console.log(store.rooms);
 };
 const getAvailableRooms = () => {
-  console.log("Change btn is clicked, hour: " + hour.value + ", day: " + day);
+  // console.log("Change btn is clicked, hour: " + hour.value + ", day: " + day);
   store.getAvailableRooms(hour.value, day.value);
 };
 onMounted(getCurrentRooms);

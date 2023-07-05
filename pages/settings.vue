@@ -44,7 +44,7 @@ const store = useStore();
 
 const changeUsername = async () => {
   const user_id = localStorage.getItem("user_id") || null;
-  console.log(user_id);
+  // console.log(user_id);
   if (user_id) {
     const currentUser = await store.getUserById(+user_id);
     console.log(currentUser);
@@ -57,7 +57,7 @@ const changeUsername = async () => {
 };
 const changePassword = async () => {
   const user_id = localStorage.getItem("user_id") || null;
-  console.log(user_id);
+  // console.log(user_id);
   if (user_id) {
     const currentUser = await store.getUserById(+user_id);
     console.log(currentUser);

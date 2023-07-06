@@ -109,9 +109,6 @@ export class ApiClass {
       method: Methods.PUT,
       url: `/user/${user.id}`,
       data: user,
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
     });
   }
   async deleteUser(userId) {

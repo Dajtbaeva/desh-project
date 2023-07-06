@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { api } from "@/api/index";
-// import { useRouter } from "vue-router";
 
 export const useStore = defineStore("store", {
   state: () => ({
@@ -42,7 +41,6 @@ export const useStore = defineStore("store", {
     },
     async logout() {
       const router = useRouter();
-      // console.log(router);
       this.isLogged = false;
       localStorage.clear();
       await router.push({ name: "Auth" });
@@ -59,7 +57,6 @@ export const useStore = defineStore("store", {
         if (token) {
           const role = localStorage.getItem("role") || null;
           this.isLogged = true;
-          // console.log(role);
         }
       }
       if (to.name === "Auth" && token) {
@@ -95,7 +92,6 @@ export const useStore = defineStore("store", {
         return this.rooms;
       }
       const index = this.days.findIndex((item) => item.name === day) + 1;
-      // console.log(index);
       try {
         if (hour > 7 && hour < 21 && index > 0 && index < 7) {
           this.rooms = await api.getAvailableRooms(hour, index);

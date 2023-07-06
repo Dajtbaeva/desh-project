@@ -68,7 +68,6 @@ export default {
     const store = useStore();
 
     const buildSchedule = () => {
-      // console.log("buildSchedule works");
       let j = 0;
       for (let i = 8; i < 20; i++) {
         shed.value.push({ id: j, time: i, events: [] });
@@ -93,7 +92,6 @@ export default {
         const data = await store.getUserEvents(user_id, role);
         if (data) {
           events.value = data;
-          // console.log(events.value);
           buildSchedule();
         } else {
           console.error("Error: data is undefined");
@@ -104,7 +102,6 @@ export default {
     };
 
     onMounted(async () => {
-      // console.log("onMounted works from schedule");
       await getEvents();
     });
     return {

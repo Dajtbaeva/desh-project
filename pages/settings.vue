@@ -7,12 +7,12 @@
         <div>
           Update username
           <input type="text" v-model="username" id="username" name="username" />
-          <!-- <button
+          <button
             class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400 mb-8"
             @click="changeUsername()"
           >
             Change
-          </button> -->
+          </button>
           <div>
             Update password
             <input

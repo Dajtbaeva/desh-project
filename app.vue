@@ -21,7 +21,7 @@ export default {
     });
     onMounted(async () => {
       await store.validateApp(route);
-      await store.addNewAdmin();
+      // await store.addNewAdmin();
     });
     return {
       store,

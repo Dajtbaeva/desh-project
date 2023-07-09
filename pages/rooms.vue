@@ -80,17 +80,10 @@ const currentDay = new Date();
 const hour = ref(currentDay.getHours());
 const day = ref(store.days[currentDay.getDay() - 1].name);
 
-// const { data: rooms } = await useFetch(
-//   `http://127.0.0.1:8000/api/available_rooms/?hour=${hour}&day=${day}`
-// );
-
 const getCurrentRooms = async () => {
-  // console.log("onMounted works");
   await store.getCurrentAvailableRooms();
-  // console.log(store.rooms);
 };
 const getAvailableRooms = () => {
-  // console.log("Change btn is clicked, hour: " + hour.value + ", day: " + day);
   store.getAvailableRooms(hour.value, day.value);
 };
 onMounted(getCurrentRooms);

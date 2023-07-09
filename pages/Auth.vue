@@ -36,14 +36,14 @@
 
 <script>
 import { useStore } from "@/store/store";
-import { useStyles } from "~/assets/styles";
+// import { useStyles } from "~/assets/styles";
 import { ref } from "vue";
 
 export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    const style = useStyles();
+    // const style = useStyles();
     const username = ref("");
     const password = ref("");
 
@@ -64,7 +64,7 @@ export default {
       login,
       username,
       password,
-      style,
+      // style,
     };
   },
 };

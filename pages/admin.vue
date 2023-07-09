@@ -441,7 +441,6 @@ const addNewEvent = async () => {
   const org_id = localStorage.getItem("org_id") || null;
   const day =
     store.days.findIndex((day) => day.name === addDay.value.trim()) + 1;
-  // addNewEvent(event_start_time, room_id, discipline, day, tutor_id, group_id);
   if (org_id) {
     await store.addNewEvent(
       addTime.value,

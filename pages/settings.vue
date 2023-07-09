@@ -7,27 +7,27 @@
         <div>
           Update username
           <input type="text" v-model="username" id="username" name="username" />
-          <button
+          <!-- <button
             class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400 mb-8"
             @click="changeUsername()"
           >
             Change
-          </button>
-        </div>
-        <div>
-          Update password
-          <input
-            type="password"
-            v-model="password"
-            id="password"
-            name="password"
-          />
-          <button
-            class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400"
-            @click="changePassword()"
-          >
-            Change
-          </button>
+          </button> -->
+          <div>
+            Update password
+            <input
+              type="password"
+              v-model="password"
+              id="password"
+              name="password"
+            />
+            <button
+              class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400"
+              @click="changePassword()"
+            >
+              Change
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -44,7 +44,6 @@ const store = useStore();
 
 const changeUsername = async () => {
   const user_id = localStorage.getItem("user_id") || null;
-  // console.log(user_id);
   if (user_id) {
     const currentUser = await store.getUserById(+user_id);
     console.log(currentUser);
@@ -57,7 +56,6 @@ const changeUsername = async () => {
 };
 const changePassword = async () => {
   const user_id = localStorage.getItem("user_id") || null;
-  // console.log(user_id);
   if (user_id) {
     const currentUser = await store.getUserById(+user_id);
     console.log(currentUser);

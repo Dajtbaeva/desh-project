@@ -45,11 +45,14 @@ const store = useStore();
 const changeUsername = async () => {
   const user_id = localStorage.getItem("user_id") || null;
   if (user_id) {
+    console.log(
+      "username: " + username.value + ", password: " + password.value
+    );
     const currentUser = await store.getUserById(+user_id);
-    console.log(currentUser);
+    console.log("before: " + currentUser.value);
     currentUser.username = username.value;
     await store.updateUser(currentUser);
-    console.log(currentUser);
+    console.log("after: " + currentUser.value);
     username.value = "";
     alert("Your username is successfully changed!");
   }
@@ -57,11 +60,14 @@ const changeUsername = async () => {
 const changePassword = async () => {
   const user_id = localStorage.getItem("user_id") || null;
   if (user_id) {
+    console.log(
+      "username: " + username.value + ", password: " + password.value
+    );
     const currentUser = await store.getUserById(+user_id);
-    console.log(currentUser);
+    console.log("before: " + currentUser);
     currentUser.password = password.value;
     await store.updateUser(currentUser);
-    console.log(currentUser);
+    console.log("after: " + currentUser);
     password.value = "";
     alert("Your password is successfully changed!");
   }

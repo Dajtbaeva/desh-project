@@ -30,6 +30,8 @@ export default {
 };
 </script>
 // admin_s, admin
-// d_test, 123 - tutor
-// studentTileu, admin
+// da_test, admin - tutor
+// studentTileu, student
 // tutorAlmas, admin
+// t_alibay, wigNqLCM
+// a_aksha, z3CEYfK2

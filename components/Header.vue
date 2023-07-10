@@ -22,6 +22,13 @@
           <li class="mr-3">
             <NuxtLink
               class="inline-block text-black no-underline hover:text-gray-800 hover:underline py-2 px-4"
+              to="/"
+              >Home</NuxtLink
+            >
+          </li>
+          <li class="mr-3">
+            <NuxtLink
+              class="inline-block text-black no-underline hover:text-gray-800 hover:underline py-2 px-4"
               to="/rooms"
               >Available rooms</NuxtLink
             >

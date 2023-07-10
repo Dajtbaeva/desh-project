@@ -236,6 +236,7 @@ export const useStore = defineStore("store", {
         );
         const response = await api.getData("event");
         if (response) this["events"] = response;
+        else console.log("Time is not free!")
       } catch (err) {
         console.log("Error from addNewEvent: " + err);
       } finally {

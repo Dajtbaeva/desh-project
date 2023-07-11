@@ -40,11 +40,11 @@ const updateUser = async () => {
   const user_id = localStorage.getItem("user_id") || null;
   console.log(user_id);
   if (user_id) {
-    console.log(
-      "username: " + username.value + ", password: " + password.value
-    );
+    // console.log(
+    //   "username: " + username.value + ", password: " + password.value
+    // );
     const currentUser = await store.getUserById(+user_id);
-    console.log("before: " + currentUser);
+    // console.log("before: " + currentUser);
     if (username.value !== "") currentUser.username = username.value;
     if (password.value !== "") currentUser.password = password.value;
     if (password.value && username.value) {
@@ -54,7 +54,7 @@ const updateUser = async () => {
     username.value = "";
     password.value = "";
     await store.updateUser(currentUser);
-    console.log("after: " + currentUser);
+    // console.log("after: " + currentUser);
     alert("Your data is successfully changed!");
   }
 };

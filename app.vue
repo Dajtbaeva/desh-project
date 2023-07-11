@@ -33,5 +33,5 @@ export default {
 // almas_test, 123 - tutor
 // studentTileu, student
 // tutorAlmas, admin
-// t_alibay, wigNqLCM
-// a_aksha, z3CEYfK2
+// t_alibay, student
+// a_aksha, tutor

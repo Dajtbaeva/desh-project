@@ -395,14 +395,23 @@ const addNewUser = async (role) => {
   const role_id = role === "student" ? 2 : 3;
   const org_id = localStorage.getItem("org_id") || null;
   if (org_id && role_id === 3) {
-    await store.addNewUser(
-      addName.value,
-      addSurname.value,
-      addEmail.value,
-      role_id,
-      Number(org_id),
-      addTutorGroup
-    );
+    const newUser = {
+      name: addName.value,
+      surname: addSurname.value,
+      email: addEmail.value,
+      role: role_id,
+      organization: Number(org_id),
+      group: addTutorGroup,
+    };
+    await store.addNewUser(newUser);
+    // await store.addNewUser(
+    //   addName.value,
+    //   addSurname.value,
+    //   addEmail.value,
+    //   role_id,
+    //   Number(org_id),
+    //   addTutorGroup
+    // );
     addName.value = "";
     addSurname.value = "";
     addEmail.value = "";

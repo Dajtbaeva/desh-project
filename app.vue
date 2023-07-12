@@ -21,7 +21,6 @@ export default {
     });
     onMounted(async () => {
       await store.validateApp(route);
-      // await store.addNewAdmin();
     });
     return {
       store,
@@ -29,9 +28,5 @@ export default {
   },
 };
 </script>
-// admin_s, admin
-// almas_test, 123 - tutor
-// studentTileu, student
-// tutorAlmas, admin
-// t_alibay, student
-// a_aksha, tutor
+// admin_s, admin // almas_test, 123 - tutor // studentTileu, student //
+tutorAlmas, admin // t_alibay, student // a_aksha, tutor

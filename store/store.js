@@ -156,27 +156,34 @@ export const useStore = defineStore("store", {
         const response = await api.getUserEvents(user_id, item);
         if (response) return response;
       } catch (err) {
-        console.log("error from getUserEvents: " + err);
+        console.log("Error from getUserEvents: " + err);
       } finally {
         this.isLoading = false;
       }
     },
-    async addNewAdmin() {
-      await api.addNewUser("Darina", "Test", "dajtbaeva@gmail.com", 3, 1, null);
-    },
-    async addNewUser(name, surname, email, role, organization, group) {
-      if (!name || !surname || !email || !role || !organization) return;
-      const item = role === 3 ? "tutors" : "students";
+    // async addNewAdmin() {
+    //   await api.addNewUser("Darina", "Test", "dajtbaeva@gmail.com", 3, 1, null);
+    // },
+    async addNewUser(newUser) {
+      if (!newUser) return;
+      const item = newUser.role === 3 ? "tutors" : "students";
       this.isLoading = true;
       try {
-        await api.addNewUser(name, surname, email, role, organization, group);
+        await api.addNewUser(
+          newUser.name,
+          newUser.surname,
+          newUser.email,
+          newUser.role,
+          newUser.organization,
+          newUser.group
+        );
         const response = await api.getData(item);
         if (response) {
           this[item] = response;
           return response;
         }
       } catch (err) {
-        console.log("This error from addNewUser: " + err);
+        console.log("Error from addNewUser: " + err);
       } finally {
         this.isLoading = false;
       }
@@ -250,7 +257,7 @@ export const useStore = defineStore("store", {
         // const response = await api.updateUser(user);
         // if (response) return response;
       } catch (err) {
-        console.log("Error from updateUser: " + err);
+        console.log("Error from updateUser function: " + err);
       } finally {
         this.isLoading = false;
       }

@@ -40,9 +40,6 @@ const updateUser = async () => {
   const user_id = localStorage.getItem("user_id") || null;
   // console.log(user_id);
   if (user_id) {
-    // console.log(
-    //   "username: " + username.value + ", password: " + password.value
-    // );
     const currentUser = await store.getUserById(+user_id);
     if (username.value !== "") currentUser.username = username.value;
     if (password.value !== "") currentUser.password = password.value;
@@ -57,7 +54,7 @@ const updateUser = async () => {
   }
 };
 useHead({
-  title: "Settings",
+  title: "Settings page",
 });
 </script>
 <style scoped>

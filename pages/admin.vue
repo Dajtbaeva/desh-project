@@ -464,7 +464,7 @@ useHead({
   title: "Admin page",
 });
 </script>
-<style>
+<style scoped>
 .nav button.active {
   background-color: #ccc;
 }

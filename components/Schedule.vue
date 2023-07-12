@@ -24,7 +24,7 @@
         </td>
       </tr>
     </table>
-    <h4 v-else class="mt-20">Loading...</h4>
+    <h2 v-else class="mt-20">Loading...</h2>
   </div>
 </template>
 <script>

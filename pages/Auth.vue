@@ -1,34 +1,45 @@
 <template>
   <div>
-    <div class="flex flex-col m-24 justify-center items-center content-center">
+    <div
+      class="flex flex-col m-auto mt-16 justify-center items-center content-center w-1/4"
+    >
       <h1 class="text-center text-teal-500 p-5 font-bold text-2xl">DESH</h1>
       <div
-        class="text-start p-5 flex flex-col justify-center items-center content-center rounded-lg border-2 border-grey-700 w-1/4"
+        class="text-start flex flex-col justify-center items-center content-center rounded-lg border-2 border-grey-700 w-full"
       >
         <h2 class="p-3 text-xl">Login</h2>
-        <p class="w-full">
-          Username <br />
-          <input
-            type="text"
+        <v-col>
+          <v-text-field
+            label="Username"
+            placeholder="Type"
+            variant="outlined"
             v-model="username"
-            class="inline rounded border border-gray-400 w-full mt-3 mb-3 focus:border-teal-600 focus:!outline-none"
-          />
-        </p>
-        <p class="w-full">
-          Password <br />
-          <input
-            type="password"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            label="Password"
+            placeholder="Type"
+            variant="outlined"
             v-model="password"
-            class="inline rounded border border-gray-400 w-full mt-3 focus:border-teal-600 focus:!outline-none"
-          />
-        </p>
+            type="password"
+          ></v-text-field>
+        </v-col>
         <button
-          class="w-2/5 mt-4 text-white cursor-pointer bg-teal-500 rounded-xl pt-1 pb-1 transform transition hover:scale-105 duration-300 ease-in-out"
+          class="w-2/5 mb-4 text-white cursor-pointer bg-teal-500 rounded-xl pt-1 pb-1 transform transition hover:scale-105 duration-300 ease-in-out"
           @click="login()"
           type="submit"
         >
           Login
         </button>
+        <v-btn
+          variant="flat"
+          elevation="8"
+          color="#18c0aa"
+          class="w-2/5 mb-4 text-none rounded-xl pt-1 pb-1 transform transition hover:scale-105 duration-300 ease-in-out"
+        >
+          Login
+        </v-btn>
       </div>
     </div>
   </div>

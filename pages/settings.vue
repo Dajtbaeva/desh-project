@@ -5,10 +5,10 @@
       <div class="form">
         <h3>Settings</h3>
         <div>
-          Update username
+          New username
           <input type="text" v-model="username" id="username" name="username" />
           <div>
-            Update password
+            New password
             <input
               type="password"
               v-model="password"
@@ -19,7 +19,7 @@
               class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400"
               @click="updateUser()"
             >
-              Change
+              Update
             </button>
           </div>
         </div>
@@ -38,7 +38,6 @@ const store = useStore();
 
 const updateUser = async () => {
   const user_id = localStorage.getItem("user_id") || null;
-  // console.log(user_id);
   if (user_id) {
     const currentUser = await store.getUserById(+user_id);
     if (username.value !== "") currentUser.username = username.value;

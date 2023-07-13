@@ -87,12 +87,12 @@ input {
   height: 100%;
   font: inherit;
   padding: 0.15rem 0.25rem;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 5px;
 }
 input:focus {
-  outline: none;
-  border-color: #18c0aa;
+  /* outline: none; */
+  /* border-color: #18c0aa; */
 }
 .card {
   display: flex;

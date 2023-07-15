@@ -14,6 +14,7 @@
             placeholder="Type"
             variant="outlined"
             v-model="username"
+            :rules="[rules.required]"
           ></v-text-field>
         </v-col>
         <v-col>
@@ -23,6 +24,7 @@
             variant="outlined"
             v-model="password"
             type="password"
+            :rules="[rules.required]"
           ></v-text-field>
         </v-col>
         <button
@@ -32,14 +34,6 @@
         >
           Login
         </button>
-        <v-btn
-          variant="flat"
-          elevation="8"
-          color="#18c0aa"
-          class="w-2/5 mb-4 text-none rounded-xl pt-1 pb-1 transform transition hover:scale-105 duration-300 ease-in-out"
-        >
-          Login
-        </v-btn>
       </div>
     </div>
   </div>
@@ -55,6 +49,9 @@ export default {
     const router = useRouter();
     const username = ref("");
     const password = ref("");
+    const rules = {
+      required: (value) => !!value || "Field is required",
+    };
 
     useHead({
       title: "DESH",
@@ -71,6 +68,7 @@ export default {
     return {
       store,
       login,
+      rules,
       username,
       password,
     };

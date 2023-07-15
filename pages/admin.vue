@@ -12,15 +12,19 @@
     </div>
 
     <div class="tabcontent" v-if="activeTab === 1">
-      <h2 v-if="store.isLoading" class="h-full">Loading...</h2>
+      <div v-if="store.isLoading" class="py-16">
+        <v-progress-circular
+          indeterminate
+          :size="67"
+          :width="5"
+        ></v-progress-circular>
+      </div>
       <div v-else>
         <div v-for="user of store.tutors">
           <div class="card">
             <div class="name">
-              <div>
-                Name: {{ user.name }} {{ user.surname }}, Email:
-                {{ user.email }}
-              </div>
+              Name: {{ user.name }} {{ user.surname }}, Email:
+              {{ user.email }}
             </div>
             <div class="details">
               <button class="delete" @click="deleteUser(user.id, 'tutors')">
@@ -81,15 +85,19 @@
       </v-form>
     </div>
     <div class="tabcontent" v-if="activeTab === 3">
-      <h2 v-if="store.isLoading" class="h-full">Loading...</h2>
+      <div v-if="store.isLoading" class="py-16">
+        <v-progress-circular
+          indeterminate
+          :size="67"
+          :width="5"
+        ></v-progress-circular>
+      </div>
       <div v-else>
         <div v-for="user of store.students">
           <div class="card">
             <div class="name">
-              <div>
-                Name: {{ user.name }} {{ user.surname }}, Email:
-                {{ user.email }}
-              </div>
+              Name: {{ user.name }} {{ user.surname }}, Email:
+              {{ user.email }}
             </div>
             <div class="details">
               <button class="delete" @click="deleteUser(user.id, 'students')">
@@ -174,7 +182,7 @@
       <div class="rooms" v-for="group of store.groups">
         <div class="card">
           <div class="name">
-            <p>{{ group.name }}</p>
+            {{ group.name }}
           </div>
           <div class="details">
             <button
@@ -221,7 +229,7 @@
       <div class="rooms" v-for="room of store.rooms">
         <div class="card">
           <div class="name">
-            <p>Name: {{ room.name }}, Places: {{ room.capacity }}</p>
+            Name: {{ room.name }}, Places: {{ room.capacity }}
           </div>
           <div class="details">
             <button
@@ -278,13 +286,11 @@
       <div class="events" v-for="event of store.events">
         <div class="card">
           <div class="name">
-            <p>
-              {{ event.discipline }}, {{ event.tutor.name }}
-              {{ event.tutor.surname }}, {{ store.days[event.day].name }}
-              {{ event.event_start_time }}:00 -
-              {{ event.event_start_time + 1 }}:00,
-              {{ event.room.name }}
-            </p>
+            {{ event.discipline }}, {{ event.tutor.name }}
+            {{ event.tutor.surname }}, {{ store.days[event.day].name }}
+            {{ event.event_start_time }}:00 -
+            {{ event.event_start_time + 1 }}:00, room:
+            {{ event.room.name }}
           </div>
           <div class="details">
             <button
@@ -298,91 +304,122 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 10">
-      <div class="form">
-        <h3>Add new event</h3>
-        <p>
-          Enter start time
-          <input
+      <v-form
+        @submit.prevent="addNewEvent()"
+        class="color-white flex flex-col items-center"
+      >
+        <h3 class="text-center p-5 font-bold text-2xl">Add new event</h3>
+        <v-col>
+          <v-text-field
+            label="Lesson start time"
+            placeholder="Type"
+            variant="outlined"
             type="number"
             v-model="addTime"
             id="time"
-            name="time"
             maxlength="2"
             min="8"
             max="20"
             step="1"
-            required
-          />
-        </p>
-        <p>
-          Enter day
-          <input
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            label="Day"
+            placeholder="Type"
+            variant="outlined"
             list="days"
             data-list="days"
             type="text"
             v-model="addDay"
             id="day"
             name="day"
-            required
-          />
-
-          <datalist id="days">
-            <option v-for="day of store.days" :value="day.name"></option>
-          </datalist>
-        </p>
-        <p>
-          Enter name of discipline
-          <input
-            id="discipline"
-            name="discipline"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-col>
+        <datalist id="days">
+          <option v-for="day of store.days" :value="day.name"></option>
+        </datalist>
+        <v-col>
+          <v-text-field
+            label="Name of discipline"
+            placeholder="Type"
+            variant="outlined"
             v-model="disciplineName"
-            required
-          />
-        </p>
-        <input
-          list="tutors"
-          data-list="tutors"
-          id="tutor-choice"
-          name="tutor-choice"
-          placeholder="Choose a tutor"
-          v-model="addTutorId"
-        />
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            list="tutors"
+            data-list="tutors"
+            id="tutor-choice"
+            name="tutor-choice"
+            v-model="addTutorId"
+            label="Choose a tutor"
+            placeholder="Type"
+            type="input"
+            variant="outlined"
+          ></v-text-field>
+        </v-col>
         <datalist id="tutors">
           <option v-for="tutor of store.tutors" :value="tutor.id">
             {{ tutor.name }} {{ tutor.surname }}
           </option>
         </datalist>
-        <input
-          list="groups"
-          id="group-choice"
-          name="group-choice"
-          placeholder="Choose a group"
-          v-model="addGroupId"
-        />
+        <v-col>
+          <v-text-field
+            label="Choose a group"
+            placeholder="Type"
+            type="input"
+            variant="outlined"
+            v-model="addGroupId"
+            list="groups"
+            id="group-choice"
+            name="group-choice"
+          ></v-text-field>
+        </v-col>
         <datalist id="groups">
-          <option v-for="group of store.groups" :value="group.id">
+          <option
+            v-for="group of store.groups"
+            :key="group.id"
+            :value="group.id"
+          >
             {{ group.name }}
           </option>
         </datalist>
-        <input
-          list="rooms"
-          id="room-choice"
-          name="room-choice"
-          placeholder="Choose a room"
-          v-model="addRoomId"
-        />
+        <v-col>
+          <v-text-field
+            label="Choose a room"
+            list="rooms"
+            id="room-choice"
+            name="room-choice"
+            v-model="addRoomId"
+            placeholder="Type"
+            type="input"
+            variant="outlined"
+          ></v-text-field>
+        </v-col>
         <datalist id="rooms">
           <option v-for="room of store.rooms" :value="room.id">
             {{ room.name }}
           </option>
         </datalist>
-        <button
-          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          @click="addNewEvent()"
-        >
-          Add
-        </button>
-      </div>
+        <v-col cols="6">
+          <v-btn
+            color="#4DD0E1"
+            :loading="store.isLoading"
+            block
+            text="white"
+            size="large"
+            type="submit"
+            variant="elevated"
+          >
+            Add
+          </v-btn>
+        </v-col>
+      </v-form>
     </div>
   </div>
 </template>
@@ -501,8 +538,7 @@ const addNewRoom = async () => {
 };
 const addNewEvent = async () => {
   const org_id = localStorage.getItem("org_id") || null;
-  const day =
-    store.days.findIndex((day) => day.name === addDay.value.trim()) + 1;
+  const day = store.days.findIndex((day) => day.name === addDay.value.trim());
   if (org_id) {
     await store.addNewEvent(
       addTime.value,

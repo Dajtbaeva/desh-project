@@ -107,6 +107,7 @@ input {
 .name {
   font-size: 24px;
   font-weight: bold;
+  margin: 0 10px;
 }
 .details {
   display: flex;

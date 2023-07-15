@@ -24,6 +24,7 @@ export const useStore = defineStore("store", {
       const router = useRouter();
       if (!username || !password) return;
       try {
+        this.isLoading = true;
         const response = await api.login(username, password);
         if (response) {
           localStorage.setItem("accessToken", response.token);
@@ -37,6 +38,8 @@ export const useStore = defineStore("store", {
       } catch (err) {
         console.log("Error from store login(): " + err);
         alert("Invalid username or password!");
+      } finally {
+        this.isLoading = false;
       }
     },
     async logout() {

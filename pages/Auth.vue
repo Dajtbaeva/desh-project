@@ -36,6 +36,41 @@
         </button>
       </div>
     </div>
+    <!-- <v-card class="mx-auto px-6 py-8" max-width="344">
+      <v-form v-model="form" @submit.prevent="onSubmit">
+        <v-text-field
+          v-model="username"
+          :readonly="store.isLoading"
+          :rules="[rules.required]"
+          class="mb-2"
+          clearable
+          label="Username"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="password"
+          :readonly="store.isLoading"
+          :rules="[rules.required]"
+          clearable
+          label="Password"
+          placeholder="Enter your password"
+        ></v-text-field>
+
+        <br />
+
+        <v-btn
+          :disabled="!form"
+          :loading="store.isLoading"
+          block
+          color="success"
+          size="large"
+          type="submit"
+          variant="elevated"
+        >
+          Sign In
+        </v-btn>
+      </v-form>
+    </v-card> -->
   </div>
 </template>
 
@@ -45,6 +80,7 @@ import { ref } from "vue";
 
 export default {
   setup() {
+    const form = false;
     const store = useStore();
     const router = useRouter();
     const username = ref("");
@@ -57,6 +93,7 @@ export default {
       title: "DESH",
     });
     const login = async () => {
+      if(!form) return;
       if (username.value && password.value) {
         await store.login(username.value, password.value);
         username.value = "";

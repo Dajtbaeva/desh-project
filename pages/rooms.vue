@@ -78,7 +78,7 @@ import { ref } from "vue";
 const store = useStore();
 const currentDay = new Date();
 const hour = ref(currentDay.getHours());
-const day = ref(store.days[currentDay.getDay() - 1].name);
+const day = ref(store.days[currentDay.getDay()].name);
 
 const getCurrentRooms = async () => {
   await store.getCurrentAvailableRooms();
@@ -86,6 +86,10 @@ const getCurrentRooms = async () => {
 const getAvailableRooms = () => {
   store.getAvailableRooms(hour.value, day.value);
 };
+// onMounted(() => {
+//   getCurrentRooms();
+//   console.log(currentDay);
+// });
 onMounted(getCurrentRooms);
 
 useHead({

@@ -1,9 +1,7 @@
 <template>
   <Header />
-  <div
-    class="mt-20 bg-gradient-to-r from-teal-400 to-cyan-500"
-    style="min-height: 1080px"
-  >
+  <div class="mt-20" style="min-height: 1080px">
+    <!-- bg-gradient-to-r from-teal-400 to-cyan-500 -->
     <div class="nav">
       <button
         v-for="tab of tabs"
@@ -20,10 +18,10 @@
         <div v-for="user of store.tutors">
           <div class="card">
             <div class="name">
-              <p>
+              <div>
                 Name: {{ user.name }} {{ user.surname }}, Email:
                 {{ user.email }}
-              </p>
+              </div>
             </div>
             <div class="details">
               <button class="delete" @click="deleteUser(user.id, 'tutors')">
@@ -35,38 +33,56 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 2">
-      <div class="form">
-        <h3>Add new tutor</h3>
-        <p>
-          Name
-          <input type="text" v-model="addName" id="name" name="name" required />
-        </p>
-        <p>
-          Surname
-          <input
-            type="text"
-            v-model="addSurname"
-            id="surname"
-            name="surname"
-            required
-          />
-        </p>
-        <p>
-          Email
-          <input
-            type="email"
-            v-model="addEmail"
-            id="email"
-            name="email"
-            required
-          />
-        </p>
-        <button
-          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          @click="addNewUser('tutor')"
+      <div class="">
+        <v-form
+          @submit.prevent="addNewUser('tutor')"
+          class="color-white flex flex-col items-center"
         >
-          Add
-        </button>
+          <h3 class="text-center text-teal-500 p-5 font-bold text-2xl">
+            Add new tutor
+          </h3>
+          <v-col>
+            <v-text-field
+              label="Name"
+              placeholder="Type"
+              variant="outlined"
+              v-model="addName"
+              :rules="[rules.required]"
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              label="Surname"
+              placeholder="Type"
+              variant="outlined"
+              v-model="addSurname"
+              :rules="[rules.required]"
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              label="Email"
+              placeholder="Type"
+              type="email"
+              variant="outlined"
+              v-model="addEmail"
+              :rules="[rules.required, rules.email]"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-btn
+              color="#4DD0E1"
+              :loading="store.isLoading"
+              block
+              text="white"
+              size="large"
+              type="submit"
+              variant="elevated"
+            >
+              Add
+            </v-btn>
+          </v-col>
+        </v-form>
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 3">
@@ -75,10 +91,10 @@
         <div v-for="user of store.students">
           <div class="card">
             <div class="name">
-              <p>
+              <div>
                 Name: {{ user.name }} {{ user.surname }}, Email:
                 {{ user.email }}
-              </p>
+              </div>
             </div>
             <div class="details">
               <button class="delete" @click="deleteUser(user.id, 'students')">
@@ -374,6 +390,15 @@ const setTab = (tabNumber) => {
   activeTab.value = tabNumber;
 };
 
+const rules = {
+  required: (value) => !!value || "Field is required",
+  email: (value) => {
+    const pattern =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return pattern.test(value) || "Invalid e-mail.";
+  },
+};
+
 const getData = async () => {
   await Promise.allSettled([
     store.getUsers("tutors"),
@@ -477,4 +502,8 @@ useHead({
 .nav button.active {
   background-color: #ccc;
 }
+/* .custom-button {
+  background: #4dd0e1 !important;
+  color: white;
+} */
 </style>

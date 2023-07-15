@@ -6,6 +6,7 @@ export const useStore = defineStore("store", {
     isLoading: false,
     isLogged: false,
     days: [
+      { name: "Sunday" },
       { name: "Monday" },
       { name: "Tuesday" },
       { name: "Wednesday" },

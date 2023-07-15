@@ -13,7 +13,7 @@
   left: 0;
   height: 100%;
   width: 200px;
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   z-index: 1;
 }
 .nav button {
@@ -32,9 +32,6 @@
 }
 .nav button:hover {
   background-color: #ddd;
-}
-.nav button.active {
-  background-color: #ccc;
 }
 .tabcontent {
   margin: auto;
@@ -81,24 +78,20 @@
   background: #23dfc6;
 }
 input {
-  display: inline;
-  margin: 0.5rem 0;
-  width: 100%;
+  width: 700px;
   height: 100%;
+  /* display: inline;
+  margin: 0.5rem 0;
   font: inherit;
-  padding: 0.15rem 0.25rem;
+  padding: 0.15rem 0.25rem; */
   /* border: 1px solid #ccc; */
-  border-radius: 5px;
-}
-input:focus {
-  /* outline: none; */
-  /* border-color: #18c0aa; */
 }
 .card {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  text-align: left;
   padding: 20px 30px;
   margin: 20px;
   background-color: #fff;
@@ -108,9 +101,9 @@ input:focus {
   /* width: 80%; */
   width: 800px;
 }
-/* .card:hover {
+.card:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-} */
+}
 .name {
   font-size: 24px;
   font-weight: bold;

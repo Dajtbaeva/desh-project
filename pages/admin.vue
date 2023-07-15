@@ -33,57 +33,55 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 2">
-      <div class="">
-        <v-form
-          @submit.prevent="addNewUser('tutor')"
-          class="color-white flex flex-col items-center"
-        >
-          <h3 class="text-center text-teal-500 p-5 font-bold text-2xl">
-            Add new tutor
-          </h3>
-          <v-col>
-            <v-text-field
-              label="Name"
-              placeholder="Type"
-              variant="outlined"
-              v-model="addName"
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
-          <v-col>
-            <v-text-field
-              label="Surname"
-              placeholder="Type"
-              variant="outlined"
-              v-model="addSurname"
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
-          <v-col>
-            <v-text-field
-              label="Email"
-              placeholder="Type"
-              type="email"
-              variant="outlined"
-              v-model="addEmail"
-              :rules="[rules.required, rules.email]"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <v-btn
-              color="#4DD0E1"
-              :loading="store.isLoading"
-              block
-              text="white"
-              size="large"
-              type="submit"
-              variant="elevated"
-            >
-              Add
-            </v-btn>
-          </v-col>
-        </v-form>
-      </div>
+      <v-form
+        @submit.prevent="addNewUser('tutor')"
+        class="color-white flex flex-col items-center"
+      >
+        <h3 class="text-center text-teal-500 p-5 font-bold text-2xl">
+          Add new tutor
+        </h3>
+        <v-col>
+          <v-text-field
+            label="Name"
+            placeholder="Type"
+            variant="outlined"
+            v-model="addName"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            label="Surname"
+            placeholder="Type"
+            variant="outlined"
+            v-model="addSurname"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            label="Email"
+            placeholder="Type"
+            type="email"
+            variant="outlined"
+            v-model="addEmail"
+            :rules="[rules.required, rules.email]"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="6">
+          <v-btn
+            color="#4DD0E1"
+            :loading="store.isLoading"
+            block
+            text="white"
+            size="large"
+            type="submit"
+            variant="elevated"
+          >
+            Add
+          </v-btn>
+        </v-col>
+      </v-form>
     </div>
     <div class="tabcontent" v-if="activeTab === 3">
       <h2 v-if="store.isLoading" class="h-full">Loading...</h2>
@@ -106,39 +104,60 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 4">
-      <div class="form">
-        <h3>Add new student</h3>
-        <p>
-          Name
-          <input type="text" v-model="addName" id="name" name="name" required />
-        </p>
-        <p>
-          Surname
-          <input
-            type="text"
+      <v-form
+        @submit.prevent="addNewUser('student')"
+        class="color-white flex flex-col items-center"
+      >
+        <h3 class="text-center text-teal-500 p-5 font-bold text-2xl">
+          Add new student
+        </h3>
+        <v-col>
+          <v-text-field
+            label="Name"
+            placeholder="Type"
+            variant="outlined"
+            v-model="addName"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            label="Surname"
+            placeholder="Type"
+            variant="outlined"
             v-model="addSurname"
-            id="surname"
-            name="surname"
-            required
-          />
-        </p>
-        <p>
-          Email
-          <input
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            label="Email"
+            placeholder="Type"
             type="email"
+            variant="outlined"
             v-model="addEmail"
-            id="email"
-            name="email"
-            required
-          />
-        </p>
-        <input
+            :rules="[rules.required, rules.email]"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            label="Choose a group"
+            placeholder="Type"
+            type="input"
+            variant="outlined"
+            v-model="addGroupId"
+            list="groups"
+            id="group-choice"
+            name="group-choice"
+          ></v-text-field>
+        </v-col>
+        <!-- <input
           list="groups"
           id="group-choice"
           name="group-choice"
           placeholder="Choose a group"
           v-model="addGroupId"
-        />
+        /> -->
         <datalist id="groups">
           <option
             v-for="group of store.groups"
@@ -148,14 +167,20 @@
             {{ group.name }}
           </option>
         </datalist>
-
-        <button
-          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          @click="addNewUser('student')"
-        >
-          Add
-        </button>
-      </div>
+        <v-col cols="6">
+          <v-btn
+            color="#4DD0E1"
+            :loading="store.isLoading"
+            block
+            text="white"
+            size="large"
+            type="submit"
+            variant="elevated"
+          >
+            Add
+          </v-btn>
+        </v-col>
+      </v-form>
     </div>
     <div class="tabcontent" v-if="activeTab === 5">
       <div class="rooms" v-for="group of store.groups">
@@ -395,7 +420,7 @@ const rules = {
   email: (value) => {
     const pattern =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return pattern.test(value) || "Invalid e-mail.";
+    return pattern.test(value) || "Invalid email";
   },
 };
 
@@ -429,27 +454,20 @@ const addNewUser = async (role) => {
       group: addTutorGroup,
     };
     await store.addNewUser(newUser);
-    // await store.addNewUser(
-    //   addName.value,
-    //   addSurname.value,
-    //   addEmail.value,
-    //   role_id,
-    //   Number(org_id),
-    //   addTutorGroup
-    // );
     addName.value = "";
     addSurname.value = "";
     addEmail.value = "";
   }
   if (org_id && role_id === 2) {
-    await store.addNewUser(
-      addName.value,
-      addSurname.value,
-      addEmail.value,
-      role_id,
-      Number(org_id),
-      Number(addGroupId.value)
-    );
+    const newUser = {
+      name: addName.value,
+      surname: addSurname.value,
+      email: addEmail.value,
+      role: role_id,
+      organization: Number(org_id),
+      group: Number(addGroupId.value),
+    };
+    await store.addNewUser(newUser);
     addName.value = "";
     addSurname.value = "";
     addEmail.value = "";

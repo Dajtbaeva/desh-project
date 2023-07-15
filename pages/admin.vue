@@ -1,7 +1,6 @@
 <template>
   <Header />
   <div class="mt-20" style="min-height: 1080px">
-    <!-- bg-gradient-to-r from-teal-400 to-cyan-500 -->
     <div class="nav">
       <button
         v-for="tab of tabs"
@@ -37,9 +36,7 @@
         @submit.prevent="addNewUser('tutor')"
         class="color-white flex flex-col items-center"
       >
-        <h3 class="text-center text-teal-500 p-5 font-bold text-2xl">
-          Add new tutor
-        </h3>
+        <h3 class="text-center p-5 font-bold text-2xl">Add new tutor</h3>
         <v-col>
           <v-text-field
             label="Name"
@@ -108,9 +105,7 @@
         @submit.prevent="addNewUser('student')"
         class="color-white flex flex-col items-center"
       >
-        <h3 class="text-center text-teal-500 p-5 font-bold text-2xl">
-          Add new student
-        </h3>
+        <h3 class="text-center p-5 font-bold text-2xl">Add new student</h3>
         <v-col>
           <v-text-field
             label="Name"
@@ -151,13 +146,6 @@
             name="group-choice"
           ></v-text-field>
         </v-col>
-        <!-- <input
-          list="groups"
-          id="group-choice"
-          name="group-choice"
-          placeholder="Choose a group"
-          v-model="addGroupId"
-        /> -->
         <datalist id="groups">
           <option
             v-for="group of store.groups"
@@ -200,25 +188,34 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 6">
-      <div class="form">
-        <h3>Add new group</h3>
-        <p>
-          Enter group name
-          <input
-            type="text"
+      <v-form
+        @submit.prevent="addNewGroup()"
+        class="color-white flex flex-col items-center"
+      >
+        <h3 class="text-center p-5 font-bold text-2xl">Add new group</h3>
+        <v-col>
+          <v-text-field
+            label="Name"
+            placeholder="Type"
+            variant="outlined"
             v-model="groupName"
-            id="name"
-            name="name"
-            required
-          />
-        </p>
-        <button
-          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          @click="addNewGroup()"
-        >
-          Add
-        </button>
-      </div>
+            :rules="[rules.required, rules.group]"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="6">
+          <v-btn
+            color="#4DD0E1"
+            :loading="store.isLoading"
+            block
+            text="white"
+            size="large"
+            type="submit"
+            variant="elevated"
+          >
+            Add
+          </v-btn>
+        </v-col>
+      </v-form>
     </div>
     <div class="tabcontent" v-if="activeTab === 7">
       <div class="rooms" v-for="room of store.rooms">
@@ -238,35 +235,44 @@
       </div>
     </div>
     <div class="tabcontent" v-if="activeTab === 8">
-      <div class="form">
-        <h3>Add new room</h3>
-        <p>
-          Enter room name
-          <input
-            type="text"
+      <v-form
+        @submit.prevent="addNewRoom()"
+        class="color-white flex flex-col items-center"
+      >
+        <h3 class="text-center p-5 font-bold text-2xl">Add new room</h3>
+        <v-col>
+          <v-text-field
+            label="Name"
+            placeholder="Type"
+            variant="outlined"
             v-model="roomName"
-            id="name"
-            name="name"
-            required
-          />
-        </p>
-        <p>
-          Enter capacity of room
-          <input
-            type="number"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            label="Places"
+            placeholder="Type"
+            variant="outlined"
             v-model="roomCap"
-            id="name"
-            name="name"
-            required
-          />
-        </p>
-        <button
-          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          @click="addNewRoom()"
-        >
-          Add
-        </button>
-      </div>
+            :rules="[rules.required]"
+            type="number"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="6">
+          <v-btn
+            color="#4DD0E1"
+            :loading="store.isLoading"
+            block
+            text="white"
+            size="large"
+            type="submit"
+            variant="elevated"
+          >
+            Add
+          </v-btn>
+        </v-col>
+      </v-form>
     </div>
     <div class="tabcontent" v-if="activeTab === 9">
       <div class="events" v-for="event of store.events">
@@ -421,6 +427,10 @@ const rules = {
     const pattern =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return pattern.test(value) || "Invalid email";
+  },
+  group: (value) => {
+    const pattern = /^[a-z]+-[a-z]+-\d$/;
+    return pattern.test(value) || "Invalid format";
   },
 };
 

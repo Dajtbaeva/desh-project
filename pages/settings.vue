@@ -1,30 +1,46 @@
 <template>
   <Header />
-  <div class="mt-20">
-    <div class="main">
-      <div class="form">
-        <h3>Settings</h3>
-        <div>
-          New username
-          <input type="text" v-model="username" id="username" name="username" />
-          <div>
-            New password
-            <input
-              type="password"
-              v-model="password"
-              id="password"
-              name="password"
-            />
-            <button
-              class="mx-auto lg:mx-0 text-gray-600 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out bg-teal-400"
-              @click="updateUser()"
-            >
-              Update
-            </button>
-          </div>
-        </div>
+  <div
+    class="mt-20 w-full flex flex-col align-center justify-center items-center content-center"
+  >
+    <v-form
+      @submit.prevent="updateUser()"
+      class="text-start flex flex-col justify-center items-center w-1/3"
+    >
+      <h1 class="text-center p-5 font-bold text-2xl">Settings</h1>
+      <v-col>
+        <v-text-field
+          label="Change username"
+          placeholder="Type"
+          variant="outlined"
+          v-model="username"
+          :rules="[rules.username]"
+        ></v-text-field>
+      </v-col>
+      <v-col>
+        <v-text-field
+          label="Change password"
+          placeholder="Type"
+          variant="outlined"
+          v-model="password"
+          type="password"
+          :rules="[rules.password]"
+        ></v-text-field>
+      </v-col>
+      <div>
+        <v-btn
+          color="#80CBC4"
+          class="mb-4 w-1/3 hover:background-transparent"
+          :loading="store.isLoading"
+          block
+          size="large"
+          type="submit"
+          variant="elevated"
+        >
+          Update
+        </v-btn>
       </div>
-    </div>
+    </v-form>
   </div>
 </template>
 
@@ -35,7 +51,17 @@ import { useStore } from "@/store/store";
 const username = ref("");
 const password = ref("");
 const store = useStore();
-
+const rules = {
+  username: (username) => {
+    const pattern = /^[a-z0-9_]+$/;
+    return pattern.test(username) || "Invalid format for username";
+  },
+  password: (password) => {
+    const pattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/;
+    return pattern.test(password) || "Invalid format for password";
+  },
+};
 const updateUser = async () => {
   const user_id = localStorage.getItem("user_id") || null;
   if (user_id) {

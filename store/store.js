@@ -91,12 +91,12 @@ export const useStore = defineStore("store", {
     },
     async getAvailableRooms(hour, day) {
       if (!hour || !day) return;
-      this.isLoading = true;
       if (this.rooms && this.rooms.length) {
         return this.rooms;
       }
-      const index = this.days.findIndex((item) => item.name === day) + 1;
+      const index = this.days.findIndex((item) => item.name === day);
       try {
+        this.isLoading = true;
         if (hour > 7 && hour < 21 && index > 0 && index < 7) {
           this.rooms = await api.getAvailableRooms(hour, index);
         } else {

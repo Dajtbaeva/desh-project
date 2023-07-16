@@ -1,69 +1,92 @@
 <template>
   <Header />
-  <div class="mt-20 bg-gradient-to-r from-teal-400 to-cyan-500 h-full">
-    <h2 class="text-center text-xl pt-10 mb-5 font-semibold">
-      Available rooms
-    </h2>
-    <div class="flex text-center justify-evenly">
-      <div>
-        <p class="mb-5">
-          Enter time:
-          <input
-            type="number"
-            v-model="hour"
-            id="time"
-            name="time"
-            maxlength="2"
-            min="8"
-            max="20"
-            step="1"
-            class="w-full rounded-lg shadow-lg"
-          />
-        </p>
-        <p class="mb-5">
-          Choose day:
-          <input
-            list="days"
-            data-list="days"
-            type="text"
-            v-model="day"
-            id="day"
-            name="day"
-            class="w-full rounded-lg shadow-lg"
-          />
+  <div class="mt-24 flex text-center justify-around">
+    <v-form @submit.prevent="getAvailableRooms()" class="color-white w-1/3">
+      <h2 class="text-center p-5 font-bold text-2xl">
+        Search for needed rooms
+      </h2>
 
-          <datalist id="days">
-            <option
-              v-for="day of store.days"
-              :key="day.name"
-              :value="day.name"
-            ></option>
-          </datalist>
-        </p>
-        <div>
-          <button
-            class="w-48 mt-5 text-teal-500 cursor-pointer bg-white rounded-lg shadow-lg border border-spacing-3"
-            @click="getAvailableRooms()"
-          >
-            Search
-          </button>
-        </div>
-        <button
-          class="w-48 mt-5 text-teal-500 cursor-pointer bg-white rounded-lg shadow-lg border border-spacing-3"
+      <v-col>
+        <v-text-field
+          label="Enter time"
+          placeholder="Type"
+          variant="outlined"
+          type="number"
+          v-model="hour"
+          id="time"
+          name="time"
+          maxlength="2"
+          min="8"
+          max="20"
+          step="1"
+          :rules="[rules.required]"
+        ></v-text-field>
+      </v-col>
+      <v-col>
+        <v-text-field
+          label="Choose day"
+          placeholder="Type"
+          variant="outlined"
+          list="days"
+          data-list="days"
+          type="text"
+          v-model="day"
+          id="day"
+          name="day"
+          :rules="[rules.required]"
+        ></v-text-field>
+      </v-col>
+      <datalist id="days">
+        <option
+          v-for="day of store.days"
+          :key="day.name"
+          :value="day.name"
+        ></option>
+      </datalist>
+      <div>
+        <v-btn
+          color="#80CBC4"
+          class="mb-4 w-1/5 hover:background-transparent"
+          @click="getAvailableRooms()"
+          :loading="store.isLoading"
+          block
+          size="large"
+          type="submit"
+          variant="elevated"
+        >
+          Search
+        </v-btn>
+      </div>
+      <div>
+        <v-btn
+          color="#80CBC4"
+          class="mb-4 w-1/3 hover:background-transparent"
           @click="getCurrentRooms()"
+          :loading="store.isLoading"
+          block
+          size="large"
+          type="submit"
+          variant="elevated"
         >
           Now
-        </button>
+        </v-btn>
       </div>
-      <div class="flex flex-col justify-start items-center content-center">
-        <p v-if="store.isLoading" class="text-white text-xl">Loading...</p>
-        <div v-else class="mx-10 w-full">
-          <div
-            v-for="room of store.rooms"
-            :key="room.id"
-            class="flex flex-row items-center content-center mb-10 bg-white rounded-lg px-5 py-3 w-full"
-          >
-            {{ room.name }} (places: {{ room.capacity }})
+    </v-form>
+    <div class="flex flex-col justify-start items-center content-center">
+      <div v-if="store.isLoading" class="py-16">
+        <v-progress-circular
+          indeterminate
+          :size="67"
+          :width="5"
+        ></v-progress-circular>
+      </div>
+      <div v-else class="mx-10">
+        <h2 class="text-center pt-5 font-bold text-2xl">Available rooms</h2>
+        <div v-for="room of store.rooms" :key="room.id">
+          <div class="card" style="width: 500px">
+            <div class="name">
+              {{ room.name }} (places: {{ room.capacity }})
+            </div>
           </div>
         </div>
       </div>
@@ -79,17 +102,15 @@ const store = useStore();
 const currentDay = new Date();
 const hour = ref(currentDay.getHours());
 const day = ref(store.days[currentDay.getDay()].name);
-
+const rules = {
+  required: (value) => !!value || "Field is required",
+};
 const getCurrentRooms = async () => {
   await store.getCurrentAvailableRooms();
 };
 const getAvailableRooms = () => {
   store.getAvailableRooms(hour.value, day.value);
 };
-// onMounted(() => {
-//   getCurrentRooms();
-//   console.log(currentDay);
-// });
 onMounted(getCurrentRooms);
 
 useHead({

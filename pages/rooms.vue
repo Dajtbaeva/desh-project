@@ -5,7 +5,6 @@
       <h2 class="text-center p-5 font-bold text-2xl">
         Search for needed rooms
       </h2>
-
       <v-col>
         <v-text-field
           label="Enter time"
@@ -43,10 +42,9 @@
           :value="day.name"
         ></option>
       </datalist>
-      <div>
+      <v-col>
         <v-btn
           color="#80CBC4"
-          class="mb-4 w-1/5 hover:background-transparent"
           @click="getAvailableRooms()"
           :loading="store.isLoading"
           block
@@ -56,11 +54,10 @@
         >
           Search
         </v-btn>
-      </div>
-      <div>
+      </v-col>
+      <v-col>
         <v-btn
           color="#80CBC4"
-          class="mb-4 w-1/3 hover:background-transparent"
           @click="getCurrentRooms()"
           :loading="store.isLoading"
           block
@@ -70,7 +67,7 @@
         >
           Now
         </v-btn>
-      </div>
+      </v-col>
     </v-form>
     <div class="flex flex-col justify-start items-center content-center">
       <div v-if="store.isLoading" class="py-16">

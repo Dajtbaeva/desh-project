@@ -99,7 +99,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useStore } from "@/store/store";
 import { ref } from "vue";
 
@@ -108,7 +108,7 @@ const currentDay = new Date();
 const hour = ref(currentDay.getHours());
 const day = ref(store.days[currentDay.getDay()].name);
 const rules = {
-  required: (value) => !!value || "Field is required",
+  required: (value: any) => !!value || "Field is required",
 };
 const getCurrentRooms = async () => {
   await store.getCurrentAvailableRooms();

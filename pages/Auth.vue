@@ -46,8 +46,7 @@
     </div>
   </div>
 </template>
-
-<script>
+<script lang="ts">
 import { useStore } from "@/store/store";
 import { ref } from "vue";
 
@@ -59,7 +58,7 @@ export default {
     const username = ref("");
     const password = ref("");
     const rules = {
-      required: (value) => !!value || "Field is required",
+      required: (value: string) => !!value || "Field is required",
     };
 
     useHead({

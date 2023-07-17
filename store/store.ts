@@ -82,7 +82,7 @@ export const useStore = defineStore("store", {
           this.rooms = await api.getAvailableRooms(hour, day);
         } else {
           this.rooms = [];
-          console.log(this.rooms);
+          // console.log(this.rooms);
           throw new Error("No value");
         }
       } catch (err) {

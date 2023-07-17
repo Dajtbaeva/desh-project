@@ -3,7 +3,7 @@
     <NuxtPage />
   </div>
 </template>
-<script>
+<script lang="ts">
 import { useStore } from "@/store/store";
 
 export default {
@@ -22,9 +22,6 @@ export default {
     onMounted(async () => {
       await store.validateApp(route);
     });
-    return {
-      store,
-    };
   },
 };
 </script>

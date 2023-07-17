@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useStore } from "@/store/store";
 
@@ -52,11 +52,11 @@ const username = ref("");
 const password = ref("");
 const store = useStore();
 const rules = {
-  username: (username) => {
+  username: (username: string) => {
     const pattern = /^[a-z0-9_]+$/;
     return pattern.test(username) || "Invalid format for username";
   },
-  password: (password) => {
+  password: (password: string) => {
     const pattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/;
     return pattern.test(password) || "Invalid format for password";
@@ -65,7 +65,8 @@ const rules = {
 const updateUser = async () => {
   const user_id = localStorage.getItem("user_id") || null;
   if (user_id) {
-    const currentUser = await store.getUserById(+user_id);
+    const currentUser = await store.getUserById<User>(+user_id);
+    if(!currentUser) return;
     if (username.value !== "") currentUser.username = username.value;
     if (password.value !== "") currentUser.password = password.value;
     if (password.value && username.value) {
@@ -83,7 +84,7 @@ useHead({
 });
 </script>
 <style scoped>
-.main {
+/* .main {
   margin: 50px auto;
   margin-left: 250px;
   width: 70%;
@@ -114,7 +115,7 @@ input {
   display: inline;
   margin: 0.5rem 0;
   width: 100%;
-  height: 100%;
+  height: 100%; 
   font: inherit;
   padding: 0.15rem 0.25rem;
   border: 1px solid #ccc;
@@ -123,5 +124,5 @@ input {
 input:focus {
   outline: none;
   border-color: #18c0aa;
-}
+} */
 </style>

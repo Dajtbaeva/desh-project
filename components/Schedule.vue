@@ -27,22 +27,22 @@
     <h2 v-else class="mt-20">Loading...</h2>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { ref } from "vue";
 import { useStore } from "@/store/store";
 
 export default {
   setup() {
-    const shed = ref([]);
-    const events = ref([]);
-    const emptyEvent = {
+    const shed = ref<Array<{ id: number; time: number; events: Eventt[] }>>([]);
+    const events = ref<Eventt[]>([]);
+    const emptyEvent: Eventt = {
       id: 0,
       event_start_time: 0,
       room: {
         id: 0,
         name: "",
         capacity: 0,
-        organization: "",
+        organization: 0,
       },
       discipline: "",
       day: 0,
@@ -54,13 +54,13 @@ export default {
         surname: "",
         email: "",
         role: 3,
-        organization: "",
+        organization: 0,
         group: null,
       },
       group: {
         id: 0,
         name: "",
-        organization: "",
+        organization: 0,
       },
       status: true,
     };
@@ -74,7 +74,7 @@ export default {
         j++;
       }
       shed.value.forEach((item) => {
-        const timeEvents = [];
+        const timeEvents: Eventt[] = [];
         const currentEvents = events.value.filter(
           (event) => item.time === event.event_start_time
         );
@@ -88,8 +88,12 @@ export default {
     const getEvents = async () => {
       const user_id = localStorage.getItem("user_id");
       const role = localStorage.getItem("role");
+      if (!user_id || !role) return;
       try {
-        const data = await store.getUserEvents(user_id, role);
+        const data = await store.getUserEvents<Eventt[]>(
+          Number(user_id),
+          role as string
+        );
         if (data) {
           events.value = data;
           buildSchedule();

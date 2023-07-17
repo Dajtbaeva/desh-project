@@ -14,25 +14,25 @@ export const useStore = defineStore("store", {
       { name: "Friday" },
       { name: "Saturday" },
     ],
-    rooms: [],
-    tutors: [],
-    students: [],
-    groups: [],
-    events: [],
+    rooms: [] as Room[],
+    tutors: [] as User[],
+    students: [] as User[],
+    groups: [] as Group[],
+    events: [] as Eventt[],
   }),
   actions: {
-    async login(username, password) {
+    async login(username: string, password: string): Promise<void> {
       const router = useRouter();
       if (!username || !password) return;
       try {
         this.isLoading = true;
-        const response = await api.login(username, password);
+        const response = await api.login<Response>(username, password);
         if (response) {
           localStorage.setItem("accessToken", response.token);
           localStorage.setItem("role", response.role);
           localStorage.setItem("user_id", response.user_id);
           localStorage.setItem("org_id", response.org_id);
-          const role = localStorage.getItem("role") || null;
+          const role = localStorage.getItem("role") || undefined;
           this.isLogged = true;
           await router.push({ name: role });
         }
@@ -43,13 +43,13 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async logout() {
+    async logout(): Promise<void> {
       const router = useRouter();
       this.isLogged = false;
       localStorage.clear();
       await router.push({ name: "Auth" });
     },
-    async validateApp(to) {
+    async validateApp(to: any): Promise<void> {
       const router = useRouter();
       const token = localStorage.getItem("accessToken") || null;
       if (to && to.meta && "requiresAuth" in to.meta && to.meta.requiresAuth) {
@@ -59,20 +59,20 @@ export const useStore = defineStore("store", {
           this.isLogged = false;
         }
         if (token) {
-          const role = localStorage.getItem("role") || null;
+          // const role = localStorage.getItem("role") || null;
           this.isLogged = true;
         }
       }
       if (to.name === "Auth" && token) {
         const role = localStorage.getItem("role") || null;
         this.isLogged = true;
-        console.log(role);
+        // console.log(role);
         if (role) {
           await router.push({ name: role });
         }
       }
     },
-    async getCurrentAvailableRooms() {
+    async getCurrentAvailableRooms(): Promise<void> {
       this.isLoading = true;
       try {
         const currentDay = new Date();
@@ -91,8 +91,8 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async getAvailableRooms(hour, day) {
-      if (!hour || !day) return;
+    async getAvailableRooms(hour: number, day: string) {
+      if (!hour || !day) return [];
       if (this.rooms && this.rooms.length) {
         return this.rooms;
       }
@@ -110,14 +110,14 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async getUsers(data) {
-      if (!data) return;
+    async getUsers(data: keyof StoreData): Promise<User[] | undefined> {
+      if (!data) return [];
       if (this[data] && this[data].length) {
-        return this[data];
+        return this[data] as User[];
       }
       this.isLoading = true;
       try {
-        const response = await api.getData(data);
+        const response = await api.getData<User[]>(data);
         if (response) {
           this[data] = response;
           return response;
@@ -128,14 +128,17 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async getData(path, data) {
-      if (!data || !path) return;
+    async getData<T>(
+      path: string,
+      data: keyof StoreData
+    ): Promise<T[] | undefined> {
+      if (!data || !path) return [];
       if (this[data] && this[data].length) {
-        return this[data];
+        return this[data] as T[];
       }
       this.isLoading = true;
       try {
-        const response = await api.getData(path);
+        const response = await api.getData<T[]>(path);
         if (response) {
           this[data] = response;
           return response;
@@ -146,31 +149,32 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async getUserById(id) {
+    async getUserById<T>(id: number): Promise<T | undefined> {
       if (!id) return;
       try {
-        const response = await api.getUserById(id);
+        const response = await api.getUserById<T>(id);
         if (response) return response;
       } catch (err) {
         console.log("Error from getUserById: " + err);
       }
     },
-    async getUserEvents(user_id, item) {
-      if (!user_id || !item) return;
+    async getUserEvents<T>(user_id: number, item: string): Promise<T> {
+      if (!user_id || !item) return [];
       this.isLoading = true;
       try {
-        const response = await api.getUserEvents(user_id, item);
-        if (response) return response;
+        const response = await api.getUserEvents<T>(user_id, item);
+        if (response) return response as T[];
       } catch (err) {
         console.log("Error from getUserEvents: " + err);
       } finally {
         this.isLoading = false;
       }
+      return [];
     },
     // async addNewAdmin() {
     //   await api.addNewUser("Darina", "Test", "dajtbaeva@gmail.com", 3, 1, null);
     // },
-    async addNewUser(newUser) {
+    async addNewUser<T>(newUser: User): Promise<T[] | undefined> {
       if (!newUser) return;
       const item = newUser.role === 3 ? "tutors" : "students";
       this.isLoading = true;
@@ -183,7 +187,7 @@ export const useStore = defineStore("store", {
           newUser.organization,
           newUser.group
         );
-        const response = await api.getData(item);
+        const response = await api.getData<T[]>(item);
         if (response) {
           this[item] = response;
           return response;
@@ -194,12 +198,12 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async addNewGroup(name, organization) {
+    async addNewGroup(name: string, organization: string): Promise<void> {
       if (!name || !organization) return;
       this.isLoading = true;
       try {
         await api.addNewGroup(name, organization);
-        const response = await api.getData("group");
+        const response = await api.getData<Group[]>("group");
         if (response) this["groups"] = response;
       } catch (err) {
         console.log("Error from addNewGroup: " + err);
@@ -207,12 +211,12 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async addNewRoom(name, capacity, organization) {
+    async addNewRoom(name: string, capacity: number, organization: string) {
       if (!name || !organization) return;
       this.isLoading = true;
       try {
         await api.addNewRoom(name, capacity, organization);
-        const response = await api.getData("room");
+        const response = await api.getData<Room[]>("room");
         if (response) this["rooms"] = response;
       } catch (err) {
         console.log("Error from addNewRoom: " + err);
@@ -221,12 +225,12 @@ export const useStore = defineStore("store", {
       }
     },
     async addNewEvent(
-      event_start_time,
-      room_id,
-      discipline,
-      day,
-      tutor_id,
-      group_id
+      event_start_time: string,
+      room_id: number,
+      discipline: string,
+      day: string,
+      tutor_id: number,
+      group_id: number
     ) {
       if (
         !event_start_time ||
@@ -247,7 +251,7 @@ export const useStore = defineStore("store", {
           tutor_id,
           group_id
         );
-        const response = await api.getData("event");
+        const response = await api.getData<Eventt[]>("event");
         if (response) this["events"] = response;
       } catch (err) {
         console.log("Error from addNewEvent: " + err);
@@ -256,7 +260,7 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async updateUser(user) {
+    async updateUser(user: User): Promise<void> {
       this.isLoading = true;
       try {
         await api.updateUser(user);
@@ -268,12 +272,19 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async deleteUser(userId, users) {
-      this[users] = this[users].filter((u) => u.id !== userId);
+    async deleteUser(userId: number, users: keyof StoreData): Promise<void> {
+      if (!this[items]) return;
+      this[users] = this[users].filter((u: any) => u.id !== userId);
       await api.deleteUser(userId);
     },
-    async deleteItem(itemId, path, items) {
-      this[items] = this[items].filter((i) => i.id !== itemId);
+    async deleteItem<T>(
+      itemId: number,
+      path: string,
+      items: keyof StoreData
+    ): Promise<void> {
+      if (!this[items]) return;
+      const data: T[] = this[items] as T[];
+      this[items] = data.filter((i: any) => i.id !== itemId);
       await api.deleteItem(itemId, path);
     },
   },

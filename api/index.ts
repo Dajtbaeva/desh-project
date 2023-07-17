@@ -21,7 +21,7 @@ export class ApiClass {
     return response.data;
   }
 
-  async getAvailableRooms(hour: number, day: string): Promise<Room[]> {
+  async getAvailableRooms(hour: number, day: number): Promise<Room[]> {
     return await this.axiosCall<Room[]>({
       method: Methods.GET,
       url: `/available_rooms/?hour=${hour}&day=${day}`,
@@ -61,8 +61,8 @@ export class ApiClass {
     name: string,
     surname: string,
     email: string,
-    role: string,
-    organization: string,
+    role: number,
+    organization: number,
     group: string
   ): Promise<T> {
     return await this.axiosCall<T>({
@@ -128,7 +128,7 @@ export class ApiClass {
     });
   }
 
-  async updateUser<T>(user: any): Promise<T> {
+  async updateUser<T>(user: User): Promise<T> {
     return await this.axiosCall<T>({
       method: Methods.PUT,
       url: `/user/${user.id}`,

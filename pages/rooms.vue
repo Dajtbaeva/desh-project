@@ -1,7 +1,7 @@
 <template>
   <Header />
   <div class="mt-24 flex text-center justify-around">
-    <v-form @submit.prevent="getAvailableRooms()" class="color-white w-1/3">
+    <div class="color-white w-1/3">
       <h2 class="text-center p-5 font-bold text-2xl">
         Search for needed rooms
       </h2>
@@ -68,7 +68,7 @@
           Now
         </v-btn>
       </v-col>
-    </v-form>
+    </div>
     <div class="flex flex-col justify-start items-center content-center">
       <div v-if="store.isLoading" class="py-16">
         <v-progress-circular
@@ -79,10 +79,18 @@
       </div>
       <div v-else class="mx-10">
         <h2 class="text-center pt-5 font-bold text-2xl">Available rooms</h2>
-        <div v-for="room of store.rooms" :key="room.id">
-          <div class="card" style="width: 500px">
-            <div class="name">
-              {{ room.name }} (places: {{ room.capacity }})
+        <div
+          v-if="!store.rooms.length"
+          class="text-center pt-10 font-bold text-2xl"
+        >
+          Unfortunately, there is no free rooms now!
+        </div>
+        <div v-else>
+          <div v-for="room of store.rooms" :key="room.id">
+            <div class="card" style="width: 500px">
+              <div class="name">
+                {{ room.name }} (places: {{ room.capacity }})
+              </div>
             </div>
           </div>
         </div>

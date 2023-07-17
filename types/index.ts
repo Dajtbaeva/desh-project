@@ -2,9 +2,12 @@ export {};
 
 declare global {
   interface User {
-    id: number;
-    username: string;
-    password: string;
+    id: any;
+    username: any;
+    password: any;
+    // id: number;
+    // username: string;
+    // password: string;
     name: string;
     surname: string;
     email: string;

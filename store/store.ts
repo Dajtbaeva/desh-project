@@ -225,10 +225,10 @@ export const useStore = defineStore("store", {
       }
     },
     async addNewEvent(
-      event_start_time: string,
+      event_start_time: number,
       room_id: number,
       discipline: string,
-      day: string,
+      day: number,
       tutor_id: number,
       group_id: number
     ) {
@@ -273,7 +273,7 @@ export const useStore = defineStore("store", {
       }
     },
     async deleteUser(userId: number, users: keyof StoreData): Promise<void> {
-      if (!this[items]) return;
+      if (!this[users]) return;
       this[users] = this[users].filter((u: any) => u.id !== userId);
       await api.deleteUser(userId);
     },

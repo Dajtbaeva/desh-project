@@ -423,7 +423,7 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { useStore } from "@/store/store";
 
 const tabs = [
@@ -454,18 +454,18 @@ const addRoomId = ref(0);
 const addTutorGroup = null;
 const store = useStore();
 
-const setTab = (tabNumber) => {
+const setTab = (tabNumber: number) => {
   activeTab.value = tabNumber;
 };
 
 const rules = {
-  required: (value) => !!value || "Field is required",
-  email: (value) => {
+  required: (value: any) => !!value || "Field is required",
+  email: (value: string) => {
     const pattern =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return pattern.test(value) || "Invalid email";
   },
-  group: (value) => {
+  group: (value: string) => {
     const pattern = /^[a-z]+-[a-z]+-\d$/;
     return pattern.test(value) || "Invalid format";
   },
@@ -475,24 +475,27 @@ const getData = async () => {
   await Promise.allSettled([
     store.getUsers("tutors"),
     store.getUsers("students"),
-    store.getData("room", "rooms"),
-    store.getData("group", "groups"),
-    store.getData("event", "events"),
+    store.getData<Room[]>("room", "rooms"),
+    store.getData<Group[]>("group", "groups"),
+    store.getData<Event[]>("event", "events"),
   ]);
 };
-const deleteUser = async (userId, users) => {
-  console.log("Delete user works");
+const deleteUser = async (userId: number, users: any) => {
+  // console.log("Delete user works");
   await store.deleteUser(userId, users);
 };
-const deleteItem = async (id, path, items) => {
-  console.log("Delete item works");
+const deleteItem = async (id: number, path: string, items: any) => {
+  // console.log("Delete item works");
   await store.deleteItem(id, path, items);
 };
-const addNewUser = async (role) => {
+const addNewUser = async (role: string) => {
   const role_id = role === "student" ? 2 : 3;
   const org_id = localStorage.getItem("org_id") || null;
   if (org_id && role_id === 3) {
-    const newUser = {
+    const newUser: User = {
+      id: null,
+      username: null,
+      password: null,
       name: addName.value,
       surname: addSurname.value,
       email: addEmail.value,
@@ -506,7 +509,10 @@ const addNewUser = async (role) => {
     addEmail.value = "";
   }
   if (org_id && role_id === 2) {
-    const newUser = {
+    const newUser: User = {
+      id: null,
+      username: null,
+      password: null,
       name: addName.value,
       surname: addSurname.value,
       email: addEmail.value,
@@ -552,7 +558,7 @@ const addNewEvent = async () => {
     addDay.value = "";
     addTutorId.value = "";
     disciplineName.value = "";
-    addRoomId.value = "";
+    addRoomId.value = 0;
     addGroupId.value = "";
   }
 };

@@ -107,10 +107,10 @@ export class ApiClass {
   }
 
   async addNewEvent<T>(
-    event_start_time: string,
+    event_start_time: number,
     room_id: number,
     discipline: string,
-    day: string,
+    day: number,
     tutor_id: number,
     group_id: number
   ): Promise<T> {

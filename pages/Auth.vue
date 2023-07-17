@@ -54,7 +54,6 @@ export default {
   setup() {
     const forms = ref(false);
     const store = useStore();
-    const router = useRouter();
     const username = ref("");
     const password = ref("");
     const rules = {

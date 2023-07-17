@@ -481,11 +481,9 @@ const getData = async () => {
   ]);
 };
 const deleteUser = async (userId: number, users: any) => {
-  // console.log("Delete user works");
   await store.deleteUser(userId, users);
 };
 const deleteItem = async (id: number, path: string, items: any) => {
-  // console.log("Delete item works");
   await store.deleteItem(id, path, items);
 };
 const addNewUser = async (role: string) => {

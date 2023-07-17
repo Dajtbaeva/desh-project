@@ -102,7 +102,6 @@
 <script setup lang="ts">
 import { useStore } from "@/store/store";
 import { ref } from "vue";
-
 const store = useStore();
 const currentDay = new Date();
 const hour = ref(currentDay.getHours());
@@ -117,7 +116,6 @@ const getAvailableRooms = () => {
   store.getAvailableRooms(hour.value, day.value);
 };
 onMounted(getCurrentRooms);
-
 useHead({
   title: "Available rooms",
 });

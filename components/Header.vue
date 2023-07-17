@@ -53,7 +53,7 @@
     <hr class="border-b-2 border-gray-100 opacity-25 my-0 py-0" />
   </header>
 </template>
-<script setup>
+<script setup lang="ts">
 import { useStore } from "@/store/store";
 const store = useStore();
 </script>

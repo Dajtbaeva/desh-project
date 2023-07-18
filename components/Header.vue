@@ -4,7 +4,7 @@
     class="fixed w-full z-30 top-0 text-white bg-gradient-to-r from-teal-400 to-cyan-500"
   >
     <div
-      class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-3 px-5"
+      class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-3 py-3"
     >
       <div class="pl-4 flex items-center">
         <NuxtLink
@@ -15,7 +15,7 @@
         </NuxtLink>
       </div>
       <div
-        class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20"
+        class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:mt-0 lg:bg-transparent text-black p-4 lg:p-0 z-20"
         id="nav-content"
       >
         <ul class="list-reset lg:flex justify-end flex-1 items-center">
@@ -43,7 +43,7 @@
         </ul>
         <button
           id="navAction"
-          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+          class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
           @click="store.logout()"
         >
           Logout

@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <div class="mt-20" style="min-height: 1080px">
+  <div class="mt-24" style="min-height: 1080px">
     <div class="nav">
       <button
         v-for="tab of tabs"

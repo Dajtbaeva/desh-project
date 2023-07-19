@@ -3,7 +3,29 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@pinia/nuxt", "@nuxtjs/i18n"],
   i18n: {
-    /* module options */
+    // vueI18n: "./i18n.config.ts",
+    locales: [
+      // {
+      //   code: "en",
+      //   name: "English",
+      //   file: "en.json",
+      // },
+      // {
+      //   code: "ru",
+      //   name: "Русский",
+      //   file: "ru.json",
+      // },
+      // {
+      //   code: "kz",
+      //   name: "Қазақ",
+      //   file: "kz.json",
+      // },
+      "en",
+      "ru",
+      "kz",
+    ],
+    defaultLocale: "en",
+    strategy: "no_prefix",
   },
   css: ["@/assets/css/main.css"],
   build: {

@@ -11,7 +11,7 @@
           class="text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
           to="/"
         >
-          DESH
+          {{ $t("title") }}
         </NuxtLink>
       </div>
       <div
@@ -23,22 +23,41 @@
             <NuxtLink
               class="inline-block text-black no-underline hover:text-gray-800 hover:underline py-2 px-4"
               to="/"
-              >Home</NuxtLink
+              >{{ $t("nav.home") }}</NuxtLink
             >
           </li>
           <li class="mr-3">
             <NuxtLink
               class="inline-block text-black no-underline hover:text-gray-800 hover:underline py-2 px-4"
               to="/rooms"
-              >Available rooms</NuxtLink
+              >{{ $t("nav.rooms") }}</NuxtLink
             >
           </li>
           <li class="mr-3">
             <NuxtLink
               class="inline-block text-black no-underline hover:text-gray-800 hover:underline py-2 px-4"
               to="/settings"
-              >Settings</NuxtLink
+              >{{ $t("nav.settings") }}</NuxtLink
             >
+          </li>
+          <!-- <li class="mr-3">
+            <form>
+              <select v-model="locale">
+                <option value="en">EN</option>
+                <option value="ru">Ru</option>
+                <option value="kz">KZ</option>
+              </select>
+            </form>
+          </li> -->
+          <li class="mr-3">
+            <div>
+              <v-autocomplete
+                v-model="locale"
+                :items="items"
+                variant="underlined"
+              ></v-autocomplete>
+              <!-- :label="$t('lang')" -->
+            </div>
           </li>
         </ul>
         <button
@@ -46,7 +65,7 @@
           class="mx-auto lg:mx-0 bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
           @click="store.logout()"
         >
-          Logout
+          {{ $t("button.logout") }}
         </button>
       </div>
     </div>
@@ -56,4 +75,10 @@
 <script setup lang="ts">
 import { useStore } from "@/store/store";
 const store = useStore();
+const { locale } = useI18n();
+const items = [
+  { title: "English", value: "en" },
+  { title: "Русский", value: "ru" },
+  { title: "Қазақ", value: "kz" },
+];
 </script>

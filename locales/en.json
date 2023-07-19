@@ -1,7 +1,9 @@
 {
-  "title": "DESH",
+  "title": "DESH_english",
+  "name": "Englishrfrf",
   "login": "Log in",
   "placeholder": "Type",
+  "lang": "Language",
   "search": "Search for needed rooms",
   "norooms": "Unfortunately, there is no free rooms now!",
   "username": "Change username",

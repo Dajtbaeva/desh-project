@@ -73,6 +73,8 @@
   "rules": {
     "required": "Field is required",
     "email": "Invalid email",
-    "group": "Invalid format"
+    "group": "Invalid format",
+    "username": "Invalid format for username",
+    "password": "Invalid format for password"
   }
 }

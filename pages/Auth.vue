@@ -11,8 +11,8 @@
         <h1 class="text-center text-teal-500 p-5 font-bold text-2xl">DESH</h1>
         <v-col>
           <v-text-field
-            label="Username"
-            placeholder="Type"
+            :label="$t('label.username')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="username"
             :rules="[rules.required]"
@@ -20,8 +20,8 @@
         </v-col>
         <v-col>
           <v-text-field
-            label="Password"
-            placeholder="Type"
+            :label="$t('label.password')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="password"
             type="password"
@@ -39,7 +39,7 @@
             type="submit"
             variant="elevated"
           >
-            Log In
+            {{ $t("button.login") }}
           </v-btn>
         </div>
       </v-form>
@@ -52,12 +52,13 @@ import { ref } from "vue";
 
 export default {
   setup() {
+    const { t: $t } = useI18n();
     const forms = ref(false);
     const store = useStore();
     const username = ref("");
     const password = ref("");
     const rules = {
-      required: (value: string) => !!value || "Field is required",
+      required: (value: string) => !!value || $t("rules.required"),
     };
 
     useHead({

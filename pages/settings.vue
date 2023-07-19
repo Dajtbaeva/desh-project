@@ -7,11 +7,13 @@
       @submit.prevent="updateUser()"
       class="text-start flex flex-col justify-center items-center w-1/3"
     >
-      <h1 class="text-center p-5 font-bold text-2xl">Settings</h1>
+      <h1 class="text-center p-5 font-bold text-2xl">
+        {{ $t("nav.settings") }}
+      </h1>
       <v-col>
         <v-text-field
-          label="Change username"
-          placeholder="Type"
+          :label="$t('username')"
+          :placeholder="$t('placeholder')"
           variant="outlined"
           v-model="username"
           :rules="[rules.username]"
@@ -19,8 +21,8 @@
       </v-col>
       <v-col>
         <v-text-field
-          label="Change password"
-          placeholder="Type"
+          :label="$t('password')"
+          :placeholder="$t('placeholder')"
           variant="outlined"
           v-model="password"
           type="password"
@@ -37,7 +39,7 @@
           type="submit"
           variant="elevated"
         >
-          Update
+          {{ $t("button.update") }}
         </v-btn>
       </div>
     </v-form>
@@ -47,6 +49,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useStore } from "@/store/store";
+const { t: $t } = useI18n();
 
 const username = ref("");
 const password = ref("");
@@ -54,19 +57,19 @@ const store = useStore();
 const rules = {
   username: (username: string) => {
     const pattern = /^[a-z0-9_]+$/;
-    return pattern.test(username) || "Invalid format for username";
+    return pattern.test(username) || $t("rules.username");
   },
   password: (password: string) => {
     const pattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/;
-    return pattern.test(password) || "Invalid format for password";
+    return pattern.test(password) || $t("rules.password");
   },
 };
 const updateUser = async () => {
   const user_id = localStorage.getItem("user_id") || null;
   if (user_id) {
     const currentUser = await store.getUserById<User>(+user_id);
-    if(!currentUser) return;
+    if (!currentUser) return;
     if (username.value !== "") currentUser.username = username.value;
     if (password.value !== "") currentUser.password = password.value;
     if (password.value && username.value) {

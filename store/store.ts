@@ -46,7 +46,11 @@ export const useStore = defineStore("store", {
     async logout(): Promise<void> {
       const router = useRouter();
       this.isLogged = false;
-      localStorage.clear();
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("role");
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("org_id");
+      // localStorage.clear();
       await router.push({ name: "Auth" });
     },
     async validateApp(to: any): Promise<void> {

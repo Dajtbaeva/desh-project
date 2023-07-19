@@ -54,10 +54,8 @@
               <v-autocomplete
                 v-model="locale"
                 :items="items"
-                @click="localeSave(locale)"
                 variant="underlined"
               ></v-autocomplete>
-              <!-- :label="$t('lang')" -->
             </div>
           </li>
         </ul>
@@ -82,7 +80,11 @@ const items = [
   { title: "Русский", value: "ru" },
   { title: "Қазақ", value: "kz" },
 ];
-const localeSave = (value: string) => {
-  localStorage.setItem("lang", value);
+const localeSave = () => {
+  console.log(locale.value);
+  localStorage.setItem("lang", locale.value);
 };
+watch(locale, () => {
+  localeSave();
+});
 </script>

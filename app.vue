@@ -11,6 +11,7 @@ export default {
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
+    const { locale } = useI18n();
 
     useHead({
       title: "DESH",
@@ -20,6 +21,9 @@ export default {
       next();
     });
     onMounted(async () => {
+      const localLang = localStorage.getItem("lang");
+      locale.value = localLang || "en";
+
       await store.validateApp(route);
     });
   },

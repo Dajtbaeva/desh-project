@@ -1,0 +1,56 @@
+{
+  "title": "DESH",
+  "login": "Log in",
+  "placeholder": "Type",
+  "search": "Search for needed rooms",
+  "norooms": "Unfortunately, there is no free rooms now!",
+  "username": "Change username",
+  "password": "Change password",
+  "schedule": "Your schedule",
+  "event_table": "hour / day",
+  "nav": {
+    "home": "Home",
+    "rooms": "Available rooms",
+    "settings": "Settings"
+  },
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  },
+  "button": {
+    "add": "Add",
+    "delete": "Delete",
+    "login": "Log in",
+    "logout": "Log out",
+    "search": "Search",
+    "now": "Now",
+    "update": "Update"
+  },
+  "card": {
+    "name": "Name",
+    "email": "Email",
+    "places": "Places",
+    "room": "room"
+  },
+  "label": {
+    "name": "Name",
+    "surname": "Surname",
+    "email": "Email",
+    "group": "Choose a group",
+    "places": "Places",
+    "time": "Lesson start time",
+    "day": "Day",
+    "discipline": "Name of discipline",
+    "tutor": "Choose a tutor",
+    "room": "Choose a room",
+    "username": "Username",
+    "password": "Password",
+    "freetime": "Enter time",
+    "freeday": "Choose a day"
+  }
+}

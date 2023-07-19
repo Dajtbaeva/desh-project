@@ -1,7 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@pinia/nuxt"],
+  modules: ["@pinia/nuxt", "@nuxtjs/i18n"],
+  i18n: {
+    /* module options */
+  },
   css: ["@/assets/css/main.css"],
   build: {
     transpile: ["vuetify"],

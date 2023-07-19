@@ -7,7 +7,7 @@
         @click="setTab(tab.num)"
         :class="activeTab === tab.num ? 'active' : ''"
       >
-        {{ tab.name }}
+        {{ $t(tab.name) }}
       </button>
     </div>
 
@@ -23,12 +23,13 @@
         <div v-for="user of store.tutors">
           <div class="card">
             <div class="name">
-              Name: {{ user.name }} {{ user.surname }}, Email:
+              {{ $t("card.name") }}: {{ user.name }} {{ user.surname }},
+              {{ $t("card.email") }}:
               {{ user.email }}
             </div>
             <div class="details">
               <button class="delete" @click="deleteUser(user.id, 'tutors')">
-                Delete
+                {{ $t("button.delete") }}
               </button>
             </div>
           </div>
@@ -40,11 +41,13 @@
         @submit.prevent="addNewUser('tutor')"
         class="color-white flex flex-col items-center"
       >
-        <h3 class="text-center p-5 font-bold text-2xl">Add new tutor</h3>
+        <h3 class="text-center p-5 font-bold text-2xl">
+          {{ $t("add.tutor") }}
+        </h3>
         <v-col>
           <v-text-field
-            label="Name"
-            placeholder="Type"
+            :label="$t('label.name')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="addName"
             :rules="[rules.required]"
@@ -52,8 +55,8 @@
         </v-col>
         <v-col>
           <v-text-field
-            label="Surname"
-            placeholder="Type"
+            :label="$t('label.surname')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="addSurname"
             :rules="[rules.required]"
@@ -61,8 +64,8 @@
         </v-col>
         <v-col>
           <v-text-field
-            label="Email"
-            placeholder="Type"
+            :label="$t('label.email')"
+            :placeholder="$t('placeholder')"
             type="email"
             variant="outlined"
             v-model="addEmail"
@@ -79,7 +82,7 @@
             type="submit"
             variant="elevated"
           >
-            Add
+            {{ $t("button.add") }}
           </v-btn>
         </v-col>
       </v-form>
@@ -96,12 +99,13 @@
         <div v-for="user of store.students">
           <div class="card">
             <div class="name">
-              Name: {{ user.name }} {{ user.surname }}, Email:
+              {{ $t("card.name") }}: {{ user.name }} {{ user.surname }},
+              {{ $t("card.email") }}:
               {{ user.email }}
             </div>
             <div class="details">
               <button class="delete" @click="deleteUser(user.id, 'students')">
-                Delete
+                {{ $t("button.delete") }}
               </button>
             </div>
           </div>
@@ -113,11 +117,13 @@
         @submit.prevent="addNewUser('student')"
         class="color-white flex flex-col items-center"
       >
-        <h3 class="text-center p-5 font-bold text-2xl">Add new student</h3>
+        <h3 class="text-center p-5 font-bold text-2xl">
+          {{ $t("add.student") }}
+        </h3>
         <v-col>
           <v-text-field
-            label="Name"
-            placeholder="Type"
+            :label="$t('label.name')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="addName"
             :rules="[rules.required]"
@@ -125,8 +131,8 @@
         </v-col>
         <v-col>
           <v-text-field
-            label="Surname"
-            placeholder="Type"
+            :label="$t('label.surname')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="addSurname"
             :rules="[rules.required]"
@@ -134,8 +140,8 @@
         </v-col>
         <v-col>
           <v-text-field
-            label="Email"
-            placeholder="Type"
+            :label="$t('label.email')"
+            :placeholder="$t('placeholder')"
             type="email"
             variant="outlined"
             v-model="addEmail"
@@ -144,8 +150,8 @@
         </v-col>
         <v-col>
           <v-text-field
-            label="Choose a group"
-            placeholder="Type"
+            :label="$t('label.group')"
+            :placeholder="$t('placeholder')"
             type="input"
             variant="outlined"
             v-model="addGroupId"
@@ -173,7 +179,7 @@
             type="submit"
             variant="elevated"
           >
-            Add
+            {{ $t("button.add") }}
           </v-btn>
         </v-col>
       </v-form>
@@ -189,7 +195,7 @@
               class="delete"
               @click="deleteItem(group.id, 'group', 'groups')"
             >
-              Delete
+              {{ $t("button.delete") }}
             </button>
           </div>
         </div>
@@ -200,11 +206,13 @@
         @submit.prevent="addNewGroup()"
         class="color-white flex flex-col items-center"
       >
-        <h3 class="text-center p-5 font-bold text-2xl">Add new group</h3>
+        <h3 class="text-center p-5 font-bold text-2xl">
+          {{ $t("add.group") }}
+        </h3>
         <v-col>
           <v-text-field
-            label="Name"
-            placeholder="Type"
+            :label="$t('label.name2')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="groupName"
             :rules="[rules.required, rules.group]"
@@ -220,7 +228,7 @@
             type="submit"
             variant="elevated"
           >
-            Add
+            {{ $t("button.add") }}
           </v-btn>
         </v-col>
       </v-form>
@@ -229,14 +237,15 @@
       <div class="rooms" v-for="room of store.rooms">
         <div class="card">
           <div class="name">
-            Name: {{ room.name }}, Places: {{ room.capacity }}
+            {{ $t("label.name2") }}: {{ room.name }}, {{ $t("card.places") }}:
+            {{ room.capacity }}
           </div>
           <div class="details">
             <button
               class="delete"
               @click="deleteItem(room.id, 'room', 'rooms')"
             >
-              Delete
+              {{ $t("button.delete") }}
             </button>
           </div>
         </div>
@@ -247,11 +256,11 @@
         @submit.prevent="addNewRoom()"
         class="color-white flex flex-col items-center"
       >
-        <h3 class="text-center p-5 font-bold text-2xl">Add new room</h3>
+        <h3 class="text-center p-5 font-bold text-2xl">{{ $t("add.room") }}</h3>
         <v-col>
           <v-text-field
-            label="Name"
-            placeholder="Type"
+            :label="$t('label.name2')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="roomName"
             :rules="[rules.required]"
@@ -259,8 +268,8 @@
         </v-col>
         <v-col>
           <v-text-field
-            label="Places"
-            placeholder="Type"
+            :label="$t('label.places')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="roomCap"
             :rules="[rules.required]"
@@ -277,7 +286,7 @@
             type="submit"
             variant="elevated"
           >
-            Add
+            {{ $t("button.add") }}
           </v-btn>
         </v-col>
       </v-form>
@@ -289,7 +298,7 @@
             {{ event.discipline }}, {{ event.tutor.name }}
             {{ event.tutor.surname }}, {{ store.days[event.day].name }}
             {{ event.event_start_time }}:00 -
-            {{ event.event_start_time + 1 }}:00, room:
+            {{ event.event_start_time + 1 }}:00, {{ $t("card.room") }}:
             {{ event.room.name }}
           </div>
           <div class="details">
@@ -297,7 +306,7 @@
               class="delete"
               @click="deleteItem(event.id, 'event', 'events')"
             >
-              Delete
+              {{ $t("button.delete") }}
             </button>
           </div>
         </div>
@@ -308,11 +317,13 @@
         @submit.prevent="addNewEvent()"
         class="color-white flex flex-col items-center"
       >
-        <h3 class="text-center p-5 font-bold text-2xl">Add new event</h3>
+        <h3 class="text-center p-5 font-bold text-2xl">
+          {{ $t("add.event") }}
+        </h3>
         <v-col>
           <v-text-field
-            label="Lesson start time"
-            placeholder="Type"
+            :label="$t('label.time')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             type="number"
             v-model="addTime"
@@ -326,8 +337,8 @@
         </v-col>
         <v-col>
           <v-text-field
-            label="Day"
-            placeholder="Type"
+            :label="$t('label.day')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             list="days"
             data-list="days"
@@ -343,8 +354,8 @@
         </datalist>
         <v-col>
           <v-text-field
-            label="Name of discipline"
-            placeholder="Type"
+            :label="$t('label.discipline')"
+            :placeholder="$t('placeholder')"
             variant="outlined"
             v-model="disciplineName"
             :rules="[rules.required]"
@@ -357,8 +368,8 @@
             id="tutor-choice"
             name="tutor-choice"
             v-model="addTutorId"
-            label="Choose a tutor"
-            placeholder="Type"
+            :label="$t('label.tutor')"
+            :placeholder="$t('placeholder')"
             type="input"
             variant="outlined"
           ></v-text-field>
@@ -370,8 +381,8 @@
         </datalist>
         <v-col>
           <v-text-field
-            label="Choose a group"
-            placeholder="Type"
+            :label="$t('label.group')"
+            :placeholder="$t('placeholder')"
             type="input"
             variant="outlined"
             v-model="addGroupId"
@@ -391,12 +402,12 @@
         </datalist>
         <v-col>
           <v-text-field
-            label="Choose a room"
+            :label="$t('label.room')"
             list="rooms"
             id="room-choice"
             name="room-choice"
             v-model="addRoomId"
-            placeholder="Type"
+            :placeholder="$t('placeholder')"
             type="input"
             variant="outlined"
           ></v-text-field>
@@ -416,7 +427,7 @@
             type="submit"
             variant="elevated"
           >
-            Add
+            {{ $t("button.add") }}
           </v-btn>
         </v-col>
       </v-form>
@@ -425,19 +436,44 @@
 </template>
 <script setup lang="ts">
 import { useStore } from "@/store/store";
+const { t: $t } = useI18n();
 
+// const tabs = [
+//   { name: "Tutors", num: 1 },
+//   { name: "Add new tutor", num: 2 },
+//   { name: "Students", num: 3 },
+//   { name: "Add new student", num: 4 },
+//   { name: "Groups", num: 5 },
+//   { name: "Add new group", num: 6 },
+//   { name: "Rooms", num: 7 },
+//   { name: "Add new room", num: 8 },
+//   { name: "Events", num: 9 },
+//   { name: "Add new event", num: 10 },
+// ];
 const tabs = [
-  { name: "Tutors", num: 1 },
-  { name: "Add new tutor", num: 2 },
-  { name: "Students", num: 3 },
-  { name: "Add new student", num: 4 },
-  { name: "Groups", num: 5 },
-  { name: "Add new group", num: 6 },
-  { name: "Rooms", num: 7 },
-  { name: "Add new room", num: 8 },
-  { name: "Events", num: 9 },
-  { name: "Add new event", num: 10 },
+  { name: "tab.tutors", num: 1 },
+  { name: "add.tutor", num: 2 },
+  { name: "tab.students", num: 3 },
+  { name: "add.student", num: 4 },
+  { name: "tab.groups", num: 5 },
+  { name: "add.group", num: 6 },
+  { name: "tab.rooms", num: 7 },
+  { name: "add.room", num: 8 },
+  { name: "tab.events", num: 9 },
+  { name: "add.event", num: 10 },
 ];
+// const tabs = [
+//   { name: $t("tab.tutors"), num: 1 },
+//   { name: $t("add.tutor"), num: 2 },
+//   { name: $t("tab.students"), num: 3 },
+//   { name: $t("add.student"), num: 4 },
+//   { name: $t("tab.groups"), num: 5 },
+//   { name: $t("add.group"), num: 6 },
+//   { name: $t("tab.rooms"), num: 7 },
+//   { name: $t("add.room"), num: 8 },
+//   { name: $t("tab.events"), num: 9 },
+//   { name: $t("add.event"), num: 10 },
+// ];
 const activeTab = ref(1);
 const addName = ref("");
 const addSurname = ref("");
@@ -459,15 +495,15 @@ const setTab = (tabNumber: number) => {
 };
 
 const rules = {
-  required: (value: any) => !!value || "Field is required",
+  required: (value: any) => !!value || $t("rules.required"),
   email: (value: string) => {
     const pattern =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return pattern.test(value) || "Invalid email";
+    return pattern.test(value) || $t("rules.email");
   },
   group: (value: string) => {
     const pattern = /^[a-z]+-[a-z]+-\d$/;
-    return pattern.test(value) || "Invalid format";
+    return pattern.test(value) || $t("rules.group");
   },
 };
 

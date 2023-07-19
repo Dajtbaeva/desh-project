@@ -1,6 +1,6 @@
 {
   "title": "DESH_english",
-  "name": "Englishrfrf",
+  "name": "English",
   "login": "Log in",
   "placeholder": "Type",
   "lang": "Language",
@@ -69,5 +69,10 @@
     "password": "Password",
     "freetime": "Enter time",
     "freeday": "Choose a day"
+  },
+  "rules": {
+    "required": "Field is required",
+    "email": "Invalid email",
+    "group": "Invalid format"
   }
 }

@@ -37,8 +37,16 @@
     "places": "Places",
     "room": "room"
   },
+  "add": {
+    "tutor": "Add new tutor",
+    "student": "Add new student",
+    "room": "Add new room",
+    "group": "Add new group",
+    "event": "Add new event"
+  },
   "label": {
     "name": "Name",
+    "name2": "Name",
     "surname": "Surname",
     "email": "Email",
     "group": "Choose a group",

@@ -438,18 +438,6 @@
 import { useStore } from "@/store/store";
 const { t: $t } = useI18n();
 
-// const tabs = [
-//   { name: "Tutors", num: 1 },
-//   { name: "Add new tutor", num: 2 },
-//   { name: "Students", num: 3 },
-//   { name: "Add new student", num: 4 },
-//   { name: "Groups", num: 5 },
-//   { name: "Add new group", num: 6 },
-//   { name: "Rooms", num: 7 },
-//   { name: "Add new room", num: 8 },
-//   { name: "Events", num: 9 },
-//   { name: "Add new event", num: 10 },
-// ];
 const tabs = [
   { name: "tab.tutors", num: 1 },
   { name: "add.tutor", num: 2 },
@@ -462,18 +450,6 @@ const tabs = [
   { name: "tab.events", num: 9 },
   { name: "add.event", num: 10 },
 ];
-// const tabs = [
-//   { name: $t("tab.tutors"), num: 1 },
-//   { name: $t("add.tutor"), num: 2 },
-//   { name: $t("tab.students"), num: 3 },
-//   { name: $t("add.student"), num: 4 },
-//   { name: $t("tab.groups"), num: 5 },
-//   { name: $t("add.group"), num: 6 },
-//   { name: $t("tab.rooms"), num: 7 },
-//   { name: $t("add.room"), num: 8 },
-//   { name: $t("tab.events"), num: 9 },
-//   { name: $t("add.event"), num: 10 },
-// ];
 const activeTab = ref(1);
 const addName = ref("");
 const addSurname = ref("");

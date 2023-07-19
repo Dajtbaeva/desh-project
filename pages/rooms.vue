@@ -3,12 +3,12 @@
   <div class="mt-24 flex text-center justify-around">
     <div class="color-white w-1/3">
       <h2 class="text-center p-5 font-bold text-2xl">
-        Search for needed rooms
+        {{ $t("search") }}
       </h2>
       <v-col>
         <v-text-field
-          label="Enter time"
-          placeholder="Type"
+          :label="$t('label.freetime')"
+          :placeholder="$t('placeholder')"
           variant="outlined"
           type="number"
           v-model="hour"
@@ -23,8 +23,8 @@
       </v-col>
       <v-col>
         <v-text-field
-          label="Choose day"
-          placeholder="Type"
+          :label="$t('label.day')"
+          :placeholder="$t('placeholder')"
           variant="outlined"
           list="days"
           data-list="days"
@@ -52,7 +52,7 @@
           type="submit"
           variant="elevated"
         >
-          Search
+          {{ $t("button.search") }}
         </v-btn>
       </v-col>
       <v-col>
@@ -65,7 +65,7 @@
           type="submit"
           variant="elevated"
         >
-          Now
+          {{ $t("button.now") }}
         </v-btn>
       </v-col>
     </div>
@@ -78,18 +78,20 @@
         ></v-progress-circular>
       </div>
       <div v-else class="mx-10">
-        <h2 class="text-center pt-5 font-bold text-2xl">Available rooms</h2>
+        <h2 class="text-center pt-5 font-bold text-2xl">
+          {{ $t("nav.rooms") }}
+        </h2>
         <div
           v-if="!store.rooms.length"
           class="text-center pt-10 font-bold text-2xl"
         >
-          Unfortunately, there is no free rooms now!
+          {{ $t("norooms") }}
         </div>
         <div v-else>
           <div v-for="room of store.rooms" :key="room.id">
             <div class="card" style="width: 500px">
               <div class="name">
-                {{ room.name }} (places: {{ room.capacity }})
+                {{ room.name }} ({{ $t("card.places") }}: {{ room.capacity }})
               </div>
             </div>
           </div>
@@ -102,12 +104,14 @@
 <script setup lang="ts">
 import { useStore } from "@/store/store";
 import { ref } from "vue";
+const { t: $t } = useI18n();
+
 const store = useStore();
 const currentDay = new Date();
 const hour = ref(currentDay.getHours());
 const day = ref(store.days[currentDay.getDay()].name);
 const rules = {
-  required: (value: any) => !!value || "Field is required",
+  required: (value: any) => !!value || $t("rules.required"),
 };
 const getCurrentRooms = async () => {
   await store.getCurrentAvailableRooms();

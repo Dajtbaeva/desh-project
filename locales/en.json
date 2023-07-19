@@ -46,6 +46,13 @@
     "group": "Add new group",
     "event": "Add new event"
   },
+  "tab": {
+    "tutors": "Tutors",
+    "students": "Students",
+    "rooms": "Rooms",
+    "groups": "Groups",
+    "events": "Events"
+  },
   "label": {
     "name": "Name",
     "name2": "Name",

@@ -114,7 +114,7 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async getUsers(data: keyof StoreData): Promise<User[] | undefined> {
+    async getUsers(data: Users): Promise<User[] | undefined> {
       if (!data) return [];
       if (this[data] && this[data].length) {
         return this[data] as User[];
@@ -134,7 +134,7 @@ export const useStore = defineStore("store", {
     },
     async getData<T>(
       path: string,
-      data: keyof StoreData
+      data: Items
     ): Promise<T[] | undefined> {
       if (!data || !path) return [];
       if (this[data] && this[data].length) {
@@ -162,7 +162,7 @@ export const useStore = defineStore("store", {
         console.log("Error from getUserById: " + err);
       }
     },
-    async getUserEvents<T>(user_id: number, item: string): Promise<T> {
+    async getUserEvents<T>(user_id: number, item: string): Promise<T[]> {
       if (!user_id || !item) return [];
       this.isLoading = true;
       try {
@@ -178,7 +178,7 @@ export const useStore = defineStore("store", {
     // async addNewAdmin() {
     //   await api.addNewUser("Darina", "Test", "dajtbaeva@gmail.com", 3, 1, null);
     // },
-    async addNewUser<T>(newUser: User): Promise<T[] | undefined> {
+    async addNewUser(newUser: User): Promise<User[] | undefined> {
       if (!newUser) return;
       const item = newUser.role === 3 ? "tutors" : "students";
       this.isLoading = true;
@@ -191,7 +191,7 @@ export const useStore = defineStore("store", {
           newUser.organization,
           newUser.group
         );
-        const response = await api.getData<T[]>(item);
+        const response = await api.getData<User[]>(item);
         if (response) {
           this[item] = response;
           return response;
@@ -276,19 +276,18 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async deleteUser(userId: number, users: keyof StoreData): Promise<void> {
+    async deleteUser(userId: number, users: Users): Promise<void> {
       if (!this[users]) return;
-      this[users] = this[users].filter((u: any) => u.id !== userId);
+      this[users] = this[users].filter((u) => u.id !== userId);
       await api.deleteUser(userId);
     },
-    async deleteItem<T>(
+    async deleteItem(
       itemId: number,
       path: string,
-      items: keyof StoreData
+      items: Items
     ): Promise<void> {
       if (!this[items]) return;
-      const data: T[] = this[items] as T[];
-      this[items] = data.filter((i: any) => i.id !== itemId);
+      this[items] = this[items].filter((i) => i.id !== itemId);
       await api.deleteItem(itemId, path);
     },
   },

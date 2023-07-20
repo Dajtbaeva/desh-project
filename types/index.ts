@@ -5,16 +5,12 @@ declare global {
     id: any;
     username: any;
     password: any;
-    // id: number;
-    // username: string;
-    // password: string;
     name: string;
     surname: string;
     email: string;
     role: number;
     organization: number;
     group: any;
-    // group: string | null;
   }
 
   interface Group {
@@ -47,6 +43,9 @@ declare global {
     user_id: string;
     org_id: string;
   }
+
+  type Users = "tutors" | "students";
+  type Items = "rooms" | "groups" | "events";
 
   interface StoreData {
     rooms: Room[];

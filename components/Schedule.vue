@@ -96,7 +96,7 @@ export default {
       const role = localStorage.getItem("role");
       if (!user_id || !role) return;
       try {
-        const data = await store.getUserEvents<Eventt[]>(
+        const data = await store.getUserEvents<Eventt>(
           Number(user_id),
           role as string
         );

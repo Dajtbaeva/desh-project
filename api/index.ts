@@ -64,7 +64,7 @@ export class ApiClass {
     email: string,
     role: number,
     organization: number,
-    group: string
+    group: number | null
   ): Promise<T> {
     return await this.axiosCall<T>({
       method: Methods.POST,

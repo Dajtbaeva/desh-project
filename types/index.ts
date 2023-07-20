@@ -2,15 +2,15 @@ export {};
 
 declare global {
   interface User {
-    id: any;
-    username: any;
-    password: any;
+    id: number | null;
+    username: string | null;
+    password: string | null;
     name: string;
     surname: string;
     email: string;
     role: number;
     organization: number;
-    group: any;
+    group: number | null;
   }
 
   interface Response {

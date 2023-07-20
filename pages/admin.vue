@@ -492,7 +492,8 @@ const rules = {
 const getData = async () => {
   await store.getAllData();
 };
-const deleteUser = async (userId: number, users: any) => {
+const deleteUser = async (userId: number | null, users: any) => {
+  if (!userId || !users) return;
   await store.deleteUser(userId, users);
 };
 const deleteItem = async (id: number | undefined, path: string, items: any) => {

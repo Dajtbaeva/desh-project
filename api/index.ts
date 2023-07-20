@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
+import { Room } from "~/composables/classes";
 
 const Methods = {
   GET: "GET",

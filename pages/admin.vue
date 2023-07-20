@@ -294,7 +294,12 @@
     <div class="tabcontent" v-if="activeTab === 9">
       <div class="events" v-for="event of store.events">
         <div class="card">
-          <div class="name">
+          <div
+            v-if="
+              event.day && event.event_start_time && event.tutor && event.room
+            "
+            class="name"
+          >
             {{ event.discipline }}, {{ event.tutor.name }}
             {{ event.tutor.surname }}, {{ store.days[event.day].name }}
             {{ event.event_start_time }}:00 -
@@ -436,6 +441,7 @@
 </template>
 <script setup lang="ts">
 import { useStore } from "@/store/store";
+import { Room, Group } from "~/composables/classes";
 const { t: $t } = useI18n();
 
 const tabs = [
@@ -484,18 +490,13 @@ const rules = {
 };
 
 const getData = async () => {
-  await Promise.allSettled([
-    store.getUsers("tutors"),
-    store.getUsers("students"),
-    store.getData<Room[]>("room", "rooms"),
-    store.getData<Group[]>("group", "groups"),
-    store.getData<Event[]>("event", "events"),
-  ]);
+  await store.getAllData();
 };
 const deleteUser = async (userId: number, users: any) => {
   await store.deleteUser(userId, users);
 };
-const deleteItem = async (id: number, path: string, items: any) => {
+const deleteItem = async (id: number | undefined, path: string, items: any) => {
+  if (!id || !path || !items) return;
   await store.deleteItem(id, path, items);
 };
 const addNewUser = async (role: string) => {

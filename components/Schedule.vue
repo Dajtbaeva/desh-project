@@ -17,7 +17,7 @@
           v-for="event of item.events"
           :class="event.discipline ? 'active' : ''"
         >
-          <p v-if="event.event_start_time">
+          <p v-if="event.event_start_time && event.tutor && event.room">
             {{ event.discipline }}, {{ event.tutor.name }}
             {{ event.tutor.surname }}, ({{ event.room.name }})
           </p>
@@ -36,6 +36,7 @@
 <script lang="ts">
 import { ref } from "vue";
 import { useStore } from "@/store/store";
+import { Eventt } from "~/composables/classes";
 
 export default {
   setup() {

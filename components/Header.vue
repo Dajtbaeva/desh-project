@@ -81,7 +81,6 @@ const items = [
   { title: "Қазақ", value: "kz" },
 ];
 const localeSave = () => {
-  console.log(locale.value);
   localStorage.setItem("lang", locale.value);
 };
 watch(locale, () => {

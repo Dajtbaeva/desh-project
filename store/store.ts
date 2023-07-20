@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "@/api/index";
+import { Room, Group, Eventt } from "~/composables/classes";
 
 export const useStore = defineStore("store", {
   state: () => ({
@@ -63,17 +64,28 @@ export const useStore = defineStore("store", {
           this.isLogged = false;
         }
         if (token) {
-          // const role = localStorage.getItem("role") || null;
           this.isLogged = true;
         }
       }
       if (to.name === "Auth" && token) {
         const role = localStorage.getItem("role") || null;
         this.isLogged = true;
-        // console.log(role);
         if (role) {
           await router.push({ name: role });
         }
+      }
+    },
+    async getAllData() {
+      try {
+        await Promise.allSettled([
+          this.getUsers("tutors"),
+          this.getUsers("students"),
+          this.getData("room", "rooms"),
+          this.getData("group", "groups"),
+          this.getData("event", "events"),
+        ]);
+      } catch (err) {
+        console.log(err);
       }
     },
     async getCurrentAvailableRooms(): Promise<void> {
@@ -86,7 +98,6 @@ export const useStore = defineStore("store", {
           this.rooms = await api.getAvailableRooms(hour, day);
         } else {
           this.rooms = [];
-          // console.log(this.rooms);
           throw new Error("No value");
         }
       } catch (err) {
@@ -132,18 +143,18 @@ export const useStore = defineStore("store", {
         this.isLoading = false;
       }
     },
-    async getData<T>(
+    async getData(
       path: string,
       data: Items
-    ): Promise<T[] | undefined> {
+    ): Promise<Room[] | Group[] | Eventt[] | undefined> {
       if (!data || !path) return [];
       if (this[data] && this[data].length) {
-        return this[data] as T[];
+        return this[data] as Room[] | Group[] | Eventt[];
       }
       this.isLoading = true;
       try {
-        const response = await api.getData<T[]>(path);
-        if (response) {
+        const response = await api.getData<Room[] | Group[] | Eventt[]>(path);
+        if (response.length) {
           this[data] = response;
           return response;
         }
@@ -278,17 +289,25 @@ export const useStore = defineStore("store", {
     },
     async deleteUser(userId: number, users: Users): Promise<void> {
       if (!this[users]) return;
-      this[users] = this[users].filter((u) => u.id !== userId);
-      await api.deleteUser(userId);
+      try {
+        await api.deleteUser(userId);
+        this[users] = this[users].filter((u) => u.id !== userId);
+      } catch (err) {
+        console.log(err);
+      }
     },
     async deleteItem(
       itemId: number,
       path: string,
       items: Items
     ): Promise<void> {
-      if (!this[items]) return;
-      this[items] = this[items].filter((i) => i.id !== itemId);
-      await api.deleteItem(itemId, path);
+      if (!itemId || !path || !items) return;
+      try {
+        await api.deleteItem(itemId, path);
+        await this.getData(path, items);
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 });

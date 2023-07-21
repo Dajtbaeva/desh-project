@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { api } from "@/api/index";
 import { Room, Group, Eventt } from "~/composables/classes";
-
+import { RouteLocationNormalized, RouteLocationNormalizedLoaded } from "vue-router";
 export const useStore = defineStore("store", {
   state: () => ({
     isLoading: false,
@@ -54,7 +54,7 @@ export const useStore = defineStore("store", {
       // localStorage.clear();
       await router.push({ name: "Auth" });
     },
-    async validateApp(to: any): Promise<void> {
+    async validateApp(to: RouteLocationNormalized | RouteLocationNormalizedLoaded): Promise<void> {
       const router = useRouter();
       const token = localStorage.getItem("accessToken") || null;
       if (to && to.meta && "requiresAuth" in to.meta && to.meta.requiresAuth) {

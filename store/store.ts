@@ -279,8 +279,6 @@ export const useStore = defineStore("store", {
       this.isLoading = true;
       try {
         await api.updateUser(user);
-        // const response = await api.updateUser(user);
-        // if (response) return response;
       } catch (err) {
         console.log("Error from updateUser function: " + err);
       } finally {

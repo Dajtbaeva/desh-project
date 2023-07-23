@@ -13,7 +13,6 @@
   left: 0;
   height: 100%;
   width: 200px;
-  /* background-color: #f1f1f1; */
   z-index: 1;
 }
 .nav button {
@@ -80,11 +79,6 @@
 input {
   width: 700px;
   height: 100%;
-  /* display: inline;
-  margin: 0.5rem 0;
-  font: inherit;
-  padding: 0.15rem 0.25rem; */
-  /* border: 1px solid #ccc; */
 }
 .card {
   display: flex;

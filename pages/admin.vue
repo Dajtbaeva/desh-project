@@ -584,8 +584,4 @@ useHead({
 .nav button.active {
   background-color: #ccc;
 }
-/* .custom-button {
-  background: #4dd0e1 !important;
-  color: white;
-} */
 </style>

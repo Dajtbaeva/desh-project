@@ -6,7 +6,6 @@ import kz from "../locales/kz.json";
 export default defineNuxtPlugin(({ vueApp }) => {
   const i18n = createI18n({
     legacy: false,
-    // globalInjection: true,
     locale: "ru",
     messages: {
       en,

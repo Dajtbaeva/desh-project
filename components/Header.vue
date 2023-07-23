@@ -40,15 +40,6 @@
               >{{ $t("nav.settings") }}</NuxtLink
             >
           </li>
-          <!-- <li class="mr-3">
-            <form>
-              <select v-model="locale">
-                <option value="en">EN</option>
-                <option value="ru">Ru</option>
-                <option value="kz">KZ</option>
-              </select>
-            </form>
-          </li> -->
           <li class="mr-3">
             <div>
               <v-autocomplete
